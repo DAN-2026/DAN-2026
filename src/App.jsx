@@ -7,7 +7,7 @@ import './App.css'
 function App() {
   return (
     <h1 className="text-3xl font-bold text-blue-800">
-      Tailwind Berhasil! Ini website DAN
+      Tailwind Berhasil! Ini website DAN 2026
     </h1>
   )
 }
