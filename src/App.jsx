@@ -1,15 +1,20 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Navbar from './Components/Navbar';
+import Home from './Pages/Home/Home';
+import Event from './Pages/Event/Event';
+import AboutUs from './Pages/AboutUs/AboutUs';
 
 function App() {
   return (
-    <h1 className="text-3xl font-bold text-blue-800">
-      Tailwind Berhasil! Ini website DAN 2026
-    </h1>
-  )
+    <BrowserRouter>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/event" element={<Event />} />
+        <Route path="/about" element={<AboutUs />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
