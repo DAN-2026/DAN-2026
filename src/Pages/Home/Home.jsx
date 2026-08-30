@@ -3,8 +3,31 @@ import { useState } from "react";
 import danImage from "../../assets/images/logo-dan.png";
 import umnImage from "../../assets/images/logo-umn.png";
 
+import accountingCharityImage from "../../assets/images/ACCOUNTINGCHARITY 2026.png";
+import himsiImage from "../../assets/images/HIMSI.jpg";
+import isfestImage from "../../assets/images/ISFEST.jpg";
+import imkomImage from "../../assets/images/IMKOM.png";
+import misterMissImage from "../../assets/images/MISTERMISSTRANSPARENT.png";
+import starlightImage from "../../assets/images/STARLIGHT.png";
+import teaterKataImage from "../../assets/images/TeaterKataK.jpg";
+import traceImage from "../../assets/images/TRACCE.png";
+import ultimagzImage from "../../assets/images/Ultimagz.png";
+import umnEcoImage from "../../assets/images/UMNECO_.png";
+import umnMedicalImage from "../../assets/images/UMNMEDICALCENTER.png";
+import umnProgrammingImage from "../../assets/images/UMNProgammingPC.png";
+import umnRadioImage from "../../assets/images/UMNRADIO.png";
+
+import sponsor1Image from "../../assets/images/sponsor1.png";
+import sponsor2Image from "../../assets/images/sponsor2.png";
+import sponsor3Image from "../../assets/images/sponsor3.png";
+import sponsor4Image from "../../assets/images/sponsor4.png";
+import sponsor5Image from "../../assets/images/sponsor5.png";
+import sponsor6Image from "../../assets/images/sponsor6.png";
+import sponsor7Image from "../../assets/images/sponsor7.png";
+
 function Home() {
-  const [activeGallery, setActiveGallery] = useState(0);
+  // const [activeGallery, setActiveGallery] = useState(0);
+  const [sponsorSlide, setSponsorSlide] = useState(0);
 
   const gallery = [
     "Gallery 1",
@@ -13,6 +36,37 @@ function Home() {
     "Gallery 4",
     "Gallery 5",
   ];
+
+  const sponsors = [
+  {
+    name: "Sponsor 1",
+    image: sponsor1Image,
+  },
+  {
+    name: "Sponsor 2",
+    image: sponsor2Image,
+  },
+  {
+    name: "Sponsor 3",
+    image: sponsor3Image,
+  },
+  {
+    name: "Sponsor 4",
+    image: sponsor4Image,
+  },
+  {
+    name: "Sponsor 5",
+    image: sponsor5Image,
+  },
+  {
+    name: "Sponsor 6",
+    image: sponsor6Image,
+  },
+  {
+    name: "Sponsor 7",
+    image: sponsor7Image,
+  },
+];
 
   const events = [
     {
@@ -35,17 +89,77 @@ function Home() {
     },
   ];
 
-  const nextGallery = () => {
-    setActiveGallery((prev) =>
-      prev === gallery.length - 1 ? 0 : prev + 1
-    );
-  };
+  // const nextGallery = () => {
+  //   setActiveGallery((prev) =>
+  //     prev === gallery.length - 1 ? 0 : prev + 1
+  //   );
+  // };
 
-  const previousGallery = () => {
-    setActiveGallery((prev) =>
-      prev === 0 ? gallery.length - 1 : prev - 1
-    );
-  };
+  // const previousGallery = () => {
+  //   setActiveGallery((prev) =>
+  //     prev === 0 ? gallery.length - 1 : prev - 1
+  //   );
+  // };
+  const sponsorsPerSlide = 6;
+
+  const totalSponsorSlides = Math.ceil(
+    sponsors.length / sponsorsPerSlide
+  );
+
+  const mediaPartners = [
+    {
+      name: "ACCOUNTING CHARITY 2026",
+      image: accountingCharityImage,
+    },
+    {
+      name: "HIMSI",
+      image: himsiImage,
+    },
+    {
+      name: "IMKOM",
+      image: imkomImage,
+    },
+    {
+      name: "ISFEST",
+      image: isfestImage,
+    },
+    {
+      name: "MISTER MISS",
+      image: misterMissImage,
+    },
+    {
+      name: "STARLIGHT",
+      image: starlightImage,
+    },
+    {
+      name: "TeaterKataK",
+      image: teaterKataImage,
+    },
+    {
+      name: "TRACCE",
+      image: traceImage,
+    },
+    {
+      name: "Ultimagz",
+      image: ultimagzImage,
+    },
+    {
+      name: "UMNECO",
+      image: umnEcoImage,
+    },
+    {
+      name: "UMN Medical Center",
+      image: umnMedicalImage,
+    },
+    {
+      name: "UMN Programming PC",
+      image: umnProgrammingImage,
+    },
+    {
+      name: "UMN Radio",
+      image: umnRadioImage,
+    },
+  ];
 
   return (
     <main className="min-h-screen overflow-hidden bg-gradient-to-br from-[#17233f] via-[#1d3c7a] to-[#174bc9] text-white">
@@ -80,7 +194,7 @@ function Home() {
 
             <p className="mt-5 max-w-md text-base leading-relaxed text-gray-200">
               Smart, healthy, and fun - empowering youths to
-              live a drug-free life.
+              <br />live a drug-free life.
             </p>
 
             <button className="mt-6 rounded-lg bg-blue-500 px-5 py-3 font-semibold transition hover:bg-blue-400">
@@ -98,7 +212,7 @@ function Home() {
 
           {/* IMAGE PLACEHOLDER */}
 
-          <div className="flex h-[280px] items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500/40 to-cyan-400/20 shadow-2xl md:h-[360px]">
+          <div className="flex h-[280px] items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500/40 to-cyan-400/20 shadow-2xl md:h-[360px] mt-8">
 
             <div className="text-center">
 
@@ -136,9 +250,9 @@ function Home() {
 
           <div className="text-center">
 
-            <p className="mb-3 text-xs text-gray-300">
+            {/* <p className="mb-3 text-xs text-gray-300">
               ⓘ &nbsp; Tentang Duta Anti Narkoba
-            </p>
+            </p> */}
 
             <h2 className="text-2xl font-bold md:text-3xl">
 
@@ -202,9 +316,7 @@ function Home() {
 
                 <div
                   key={index}
-                  className={`flex h-24 items-center justify-center rounded-xl bg-gradient-to-br from-blue-700 to-blue-900 text-xs text-gray-300 transition md:h-28 ${index === activeGallery
-                    ? "scale-[1.03] ring-2 ring-cyan-400"
-                    : ""
+                  className={`flex h-24 items-center justify-center rounded-xl bg-gradient-to-br from-blue-700 to-blue-900 text-xs text-gray-300 md:h-28 
                     }`}
                 >
 
@@ -219,29 +331,29 @@ function Home() {
 
             {/* LEFT BUTTON */}
 
-            <button
+            {/* <button
               onClick={previousGallery}
               className="absolute -left-5 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border-2 border-white/70 bg-[#23365b] transition hover:bg-blue-500"
             >
               ←
-            </button>
+            </button> */}
 
 
             {/* RIGHT BUTTON */}
 
-            <button
+            {/* <button
               onClick={nextGallery}
               className="absolute -right-5 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border-2 border-white/70 bg-[#23365b] transition hover:bg-blue-500"
             >
               →
-            </button>
+            </button> */}
 
           </div>
 
 
           {/* DOTS */}
 
-          <div className="mt-5 flex justify-center gap-2">
+          {/* <div className="mt-5 flex justify-center gap-2">
 
             {gallery.map((_, index) => (
 
@@ -256,7 +368,7 @@ function Home() {
 
             ))}
 
-          </div>
+          </div> */}
 
         </div>
 
@@ -274,9 +386,9 @@ function Home() {
 
         <div className="text-center">
 
-          <p className="text-xs text-gray-300">
+          {/* <p className="text-xs text-gray-300">
             🗓️ &nbsp; Kegiatan Kami
-          </p>
+          </p> */}
 
           <h2 className="mt-2 text-4xl font-extrabold">
 
@@ -291,7 +403,7 @@ function Home() {
           <p className="mx-auto mt-2 max-w-xl text-sm text-gray-300">
 
             Berbagai kegiatan inspiratif yang kami selenggarakan
-            untuk mewujudkan generasi bebas narkoba.
+            untuk <br />mewujudkan generasi bebas narkoba.
 
           </p>
 
@@ -466,58 +578,103 @@ function Home() {
 
         <div className="rounded-2xl bg-[#1c2b48] px-8 py-10 text-center shadow-xl">
 
+          {/* Icon */}
           <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-blue-700 text-xl">
             🤝
           </div>
 
-          <h2 className="mt-4 text-2xl font-bold">
-
+          {/* Title */}
+          <h2 className="mt-4 text-2xl font-bold text-white">
             Our{" "}
-
             <span className="text-cyan-400">
               Sponsors
             </span>
-
           </h2>
 
+          {/* Description */}
           <p className="mx-auto mt-2 max-w-sm text-sm text-gray-300">
-
             Terima kasih kepada sponsor yang telah
             mendukung gerakan anti narkoba.
-
           </p>
 
+          {/* CAROUSEL */}
+          <div className="mt-8 flex items-center justify-center gap-3">
 
-          {/* SPONSOR PLACEHOLDER */}
+            {/* LEFT BUTTON */}
+            <button
+              onClick={() =>
+                setSponsorSlide(
+                  sponsorSlide === 0
+                    ? totalSponsorSlides - 1
+                    : sponsorSlide - 1
+                )
+              }
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/40 text-xl text-white transition hover:bg-white/10"
+            >
+              ←
+            </button>
 
-          <div className="mt-8 flex h-28 items-center justify-center rounded-xl bg-[#19263d]">
 
-            <p className="text-sm text-gray-500">
-              Sponsor Logos
-            </p>
+            {/* LOGOS */}
+            <div className="w-full max-w-md overflow-hidden">
+
+              <div className="grid grid-cols-2 gap-3">
+
+                {sponsors
+                  .slice(
+                    sponsorSlide * sponsorsPerSlide,
+                    sponsorSlide * sponsorsPerSlide + sponsorsPerSlide
+                  )
+                  .map((sponsor) => (
+                    <div
+                      key={sponsor.name}
+                      className="flex h-20 items-center justify-center rounded-lg bg-white p-3 transition duration-300 hover:scale-105"
+                    >
+                      <img
+                        src={sponsor.image}
+                        alt={sponsor.name}
+                        className="max-h-full max-w-full object-contain"
+                      />
+                    </div>
+                  ))}
+
+              </div>
+
+            </div>
+
+
+            {/* RIGHT BUTTON */}
+            <button
+              onClick={() =>
+                setSponsorSlide(
+                  sponsorSlide === totalSponsorSlides - 1
+                    ? 0
+                    : sponsorSlide + 1
+                )
+              }
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/40 text-xl text-white transition hover:bg-white/10"
+            >
+              →
+            </button>
 
           </div>
 
 
-          <div className="mt-5 flex items-center justify-between">
+          {/* SLIDE INDICATOR */}
+          <div className="mt-5 flex justify-center gap-2">
 
-            <button className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-white/60 transition hover:bg-blue-500">
-              ←
-            </button>
-
-            <div className="flex gap-2">
-
-              <span className="h-1 w-5 rounded bg-gray-600"></span>
-
-              <span className="h-1 w-5 rounded bg-cyan-400"></span>
-
-              <span className="h-1 w-5 rounded bg-gray-600"></span>
-
-            </div>
-
-            <button className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-white/60 transition hover:bg-blue-500">
-              →
-            </button>
+            {Array.from({ length: totalSponsorSlides }).map(
+              (_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setSponsorSlide(index)}
+                  className={`h-1 rounded-full transition-all ${sponsorSlide === index
+                      ? "w-8 bg-cyan-400"
+                      : "w-5 bg-gray-600"
+                    }`}
+                />
+              )
+            )}
 
           </div>
 
@@ -529,57 +686,53 @@ function Home() {
 
         <div className="rounded-2xl bg-[#1c2b48] px-8 py-10 text-center shadow-xl">
 
+          {/* Icon */}
           <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-blue-700 text-xl">
-            📢
+            📣
           </div>
 
-          <h2 className="mt-4 text-2xl font-bold">
-
+          {/* Title */}
+          <h2 className="mt-4 text-2xl font-bold text-white">
             Media{" "}
-
             <span className="text-cyan-400">
               Partners
             </span>
-
           </h2>
 
+          {/* Description */}
           <p className="mx-auto mt-2 max-w-sm text-sm text-gray-300">
-
             Berkolaborasi dengan media untuk menyebarkan
-            edukasi dan informasi positif.
-
+            <br />edukasi dan informasi positif.
           </p>
 
+          {/* LOGO CONTAINER */}
+          <div className="mt-8 rounded-xl bg-[#19263d] p-6">
 
-          {/* MEDIA PLACEHOLDERS */}
+            <div className="grid grid-cols-3 gap-3 sm:grid-cols-5">
 
-          <div className="mt-7 grid grid-cols-4 gap-3 rounded-xl bg-[#19263d] p-5 sm:grid-cols-5">
+              {mediaPartners.map((partner) => (
+                <div
+                  key={partner.name}
+                  className="flex h-16 items-center justify-center rounded-lg bg-white p-2 transition duration-300 hover:scale-105"
+                >
+                  <img
+                    src={partner.image}
+                    alt={partner.name}
+                    className="max-h-full max-w-full object-contain"
+                  />
+                </div>
+              ))}
 
-            {Array.from({ length: 10 }).map((_, index) => (
-
-              <div
-                key={index}
-                className="flex h-10 items-center justify-center rounded-md bg-white text-xs text-gray-500"
-              >
-
-                Logo {index + 1}
-
-              </div>
-
-            ))}
+            </div>
 
           </div>
 
-
+          {/* SLIDER INDICATOR
           <div className="mt-5 flex justify-center gap-2">
-
-            <span className="h-1 w-5 rounded bg-gray-600"></span>
-
-            <span className="h-1 w-5 rounded bg-cyan-400"></span>
-
-            <span className="h-1 w-5 rounded bg-gray-600"></span>
-
-          </div>
+            <span className="h-1 w-6 rounded-full bg-gray-600"></span>
+            <span className="h-1 w-6 rounded-full bg-cyan-400"></span>
+            <span className="h-1 w-6 rounded-full bg-gray-600"></span>
+          </div> */}
 
         </div>
 
@@ -602,7 +755,7 @@ function Home() {
 
             <div className="flex justify-center md:justify-start">
 
-              <div className="flex h-28 w-28 items-center justify-center">
+              <div className="flex h-32 w-auto items-center justify-center">
 
                 <img
                   src={danImage}
@@ -716,9 +869,9 @@ function Home() {
 
             {/* LOGO UMN */}
 
-            <div className="flex justify-center md:justify-end">
+            <div className="flex justify-center md:justify-center">
 
-              <div className="flex h-28 w-24 items-center justify-center">
+              <div className="flex h-32 w-auto items-center justify-center">
 
                 <img
                   src={umnImage}
