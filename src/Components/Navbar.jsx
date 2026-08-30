@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+import danImage from "../assets/images/logo-dan.png";
 
 function Navbar() {
   const location = useLocation();
@@ -9,8 +10,21 @@ function Navbar() {
   ];
 
   return (
-    <div className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4">
+    
+    <div className="fixed top-4 left-0 right-0 z-50 flex justify-center  ">
+    
+        {/* Logo */}
+        <div className="absolute left-8 top-1/2 -translate-y-1/2 ">
+          <img
+            src={danImage}
+            alt="Duta Anti Narkoba UMN"
+            className="h-14 w-auto object-contain"
+          />
+        </div>
+      
+
       <nav className="flex items-center gap-2 px-2 py-2 rounded-full bg-white/10 backdrop-blur-lg border border-white/10 shadow-xl">
+      
         {menu.map((item) => (
           <Link
             key={item.path}
@@ -24,6 +38,7 @@ function Navbar() {
             {item.name}
           </Link>
         ))}
+        
       </nav>
     </div>
   );
