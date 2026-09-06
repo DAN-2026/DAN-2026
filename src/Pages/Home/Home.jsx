@@ -1,91 +1,114 @@
 import { useState } from "react";
 
-import danImage from "../../assets/images/logo-dan.png";
-import umnImage from "../../assets/images/logo-umn.png";
+import danImage from "../../assets/logoutama/logo-dan.png";
+import umnImage from "../../assets/logoutama/logo-umn.png";
 
-import accountingCharityImage from "../../assets/images/ACCOUNTINGCHARITY 2026.png";
-import himsiImage from "../../assets/images/HIMSI.jpg";
-import isfestImage from "../../assets/images/ISFEST.jpg";
-import imkomImage from "../../assets/images/IMKOM.png";
-import misterMissImage from "../../assets/images/MISTERMISSTRANSPARENT.png";
-import starlightImage from "../../assets/images/STARLIGHT.png";
-import teaterKataImage from "../../assets/images/TeaterKataK.jpg";
-import traceImage from "../../assets/images/TRACCE.png";
-import ultimagzImage from "../../assets/images/Ultimagz.png";
-import umnEcoImage from "../../assets/images/UMNECO_.png";
-import umnMedicalImage from "../../assets/images/UMNMEDICALCENTER.png";
-import umnProgrammingImage from "../../assets/images/UMNProgammingPC.png";
-import umnRadioImage from "../../assets/images/UMNRADIO.png";
+import galleryImage1 from "../../assets/gallery/gallery1.jpg";
+import galleryImage2 from "../../assets/gallery/gallery2.jpg";
+import galleryImage3 from "../../assets/gallery/gallery3.jpg";
+import galleryImage4 from "../../assets/gallery/gallery4.jpg";
+import galleryImage5 from "../../assets/gallery/gallery5.jpg";
 
-import sponsor1Image from "../../assets/images/sponsor1.png";
-import sponsor2Image from "../../assets/images/sponsor2.png";
-import sponsor3Image from "../../assets/images/sponsor3.png";
-import sponsor4Image from "../../assets/images/sponsor4.png";
-import sponsor5Image from "../../assets/images/sponsor5.png";
-import sponsor6Image from "../../assets/images/sponsor6.png";
-import sponsor7Image from "../../assets/images/sponsor7.png";
+import accountingCharityImage from "../../assets/mediaPartner/ACCOUNTINGCHARITY 2026.png";
+import himsiImage from "../../assets/mediaPartner/HIMSI.jpg";
+import isfestImage from "../../assets/mediaPartner/ISFEST.jpg";
+import imkomImage from "../../assets/mediaPartner/IMKOM.png";
+import misterMissImage from "../../assets/mediaPartner/MISTERMISSTRANSPARENT.png";
+import starlightImage from "../../assets/mediaPartner/STARLIGHT.png";
+import teaterKataImage from "../../assets/mediaPartner/TeaterKataK.jpg";
+import traceImage from "../../assets/mediaPartner/TRACCE.png";
+import ultimagzImage from "../../assets/mediaPartner/Ultimagz.png";
+import umnEcoImage from "../../assets/mediaPartner/UMNECO_.png";
+import umnMedicalImage from "../../assets/mediaPartner/UMNMEDICALCENTER.png";
+import umnProgrammingImage from "../../assets/mediaPartner/UMNProgammingPC.png";
+import umnRadioImage from "../../assets/mediaPartner/UMNRADIO.png";
+
+import sponsor1Image from "../../assets/sponsor/sponsor1.png";
+import sponsor2Image from "../../assets/sponsor/sponsor2.png";
+import sponsor3Image from "../../assets/sponsor/sponsor3.png";
+import sponsor4Image from "../../assets/sponsor/sponsor4.png";
+import sponsor5Image from "../../assets/sponsor/sponsor5.png";
+import sponsor6Image from "../../assets/sponsor/sponsor6.png";
+import sponsor7Image from "../../assets/sponsor/sponsor7.png";
 
 function Home() {
   // const [activeGallery, setActiveGallery] = useState(0);
   const [sponsorSlide, setSponsorSlide] = useState(0);
 
   const gallery = [
-    "Gallery 1",
-    "Gallery 2",
-    "Gallery 3",
-    "Gallery 4",
-    "Gallery 5",
+    {
+      name: "Gallery 1",
+      image: galleryImage1,
+    },
+    {
+      name: "Gallery 2",
+      image: galleryImage2,
+    },
+    {
+      name: "Gallery 3",
+      image: galleryImage3,
+    },
+    {
+      name: "Gallery 4",
+      image: galleryImage4,
+    },
+    {
+      name: "Gallery 5",
+      image: galleryImage5,
+    },
   ];
 
   const sponsors = [
-  {
-    name: "Sponsor 1",
-    image: sponsor1Image,
-  },
-  {
-    name: "Sponsor 2",
-    image: sponsor2Image,
-  },
-  {
-    name: "Sponsor 3",
-    image: sponsor3Image,
-  },
-  {
-    name: "Sponsor 4",
-    image: sponsor4Image,
-  },
-  {
-    name: "Sponsor 5",
-    image: sponsor5Image,
-  },
-  {
-    name: "Sponsor 6",
-    image: sponsor6Image,
-  },
-  {
-    name: "Sponsor 7",
-    image: sponsor7Image,
-  },
-];
+    {
+      name: "Sponsor 1",
+      image: sponsor1Image,
+    },
+    {
+      name: "Sponsor 2",
+      image: sponsor2Image,
+    },
+    {
+      name: "Sponsor 3",
+      image: sponsor3Image,
+    },
+    {
+      name: "Sponsor 4",
+      image: sponsor4Image,
+    },
+    {
+      name: "Sponsor 5",
+      image: sponsor5Image,
+    },
+    {
+      name: "Sponsor 6",
+      image: sponsor6Image,
+    },
+    {
+      name: "Sponsor 7",
+      image: sponsor7Image,
+    },
+  ];
 
   const events = [
     {
-      date: "18 - 22 MEI 2026",
+      date: "27 JUNI 2026",
       title: "UMN ADW 2026",
       description:
-        "Program aksi kepedulian sosial yang berfokus pada pencegahan narkoba bagi anak-anak pejuang kanker di YKAKI.",
+        "Program aksi kepedulian sosial bagi anak-anak pejuang kanker di YKAKI.",
+        name: "UMN ADW 2026",
+        image: galleryImage2,
     },
     {
-      date: "15 MAR 2025",
-      title: "DGTS 2025",
+      date: "15 OKTOBER 2026",
+      title: "DGTS 2026",
       description:
         "Program edukasi yang berfokus pada pencegahan penyalahgunaan narkoba di kalangan pelajar dan mahasiswa.",
     },
     {
-      date: "27 NOV 2025",
-      title: "AWARDING NIGHT 2025",
+      date: "25 NOVEMBER 2026",
+      title: "AWARDING NIGHT 2026",
       description:
-        "Penghargaan untuk individu dan komunitas berprestasi dalam gerakan anti narkoba.",
+        "Malam puncak bagi para peserta dan finalis yang telah berpartisipasi dalam kegiatan Duta Anti Narkoba.",
     },
   ];
 
@@ -316,11 +339,14 @@ function Home() {
 
                 <div
                   key={index}
-                  className={`flex h-24 items-center justify-center rounded-xl bg-gradient-to-br from-blue-700 to-blue-900 text-xs text-gray-300 md:h-28 
-                    }`}
+                  className="h-24 md:h-28 overflow-hidden rounded-xl bg-slate-800"
                 >
 
-                  📷 {item}
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="h-full w-full object-cover"
+                  />
 
                 </div>
 
@@ -424,7 +450,10 @@ function Home() {
               {/* IMAGE PLACEHOLDER */}
 
               <div className="absolute inset-0 flex items-center justify-center text-5xl opacity-20">
-                📷
+                <img
+                src={event.image} 
+                alt={event.title} 
+                />
               </div>
 
 
@@ -669,8 +698,8 @@ function Home() {
                   key={index}
                   onClick={() => setSponsorSlide(index)}
                   className={`h-1 rounded-full transition-all ${sponsorSlide === index
-                      ? "w-8 bg-cyan-400"
-                      : "w-5 bg-gray-600"
+                    ? "w-8 bg-cyan-400"
+                    : "w-5 bg-gray-600"
                     }`}
                 />
               )
