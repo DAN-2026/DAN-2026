@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import danImage from "../../assets/logoutama/logo-dan.png";
 import umnImage from "../../assets/logoutama/logo-umn.png";
@@ -32,8 +32,9 @@ import sponsor6Image from "../../assets/sponsor/sponsor6.png";
 import sponsor7Image from "../../assets/sponsor/sponsor7.png";
 
 function Home() {
-  // const [activeGallery, setActiveGallery] = useState(0);
+  const [activeGallery, setActiveGallery] = useState(0);
   const [sponsorSlide, setSponsorSlide] = useState(0);
+  const [mediaPartnerSlide, setMediaPartnerSlide] = useState(0);
 
   const gallery = [
     {
@@ -123,7 +124,7 @@ function Home() {
   //     prev === 0 ? gallery.length - 1 : prev - 1
   //   );
   // };
-  const sponsorsPerSlide = 6;
+  const sponsorsPerSlide = 2;
 
   const totalSponsorSlides = Math.ceil(
     sponsors.length / sponsorsPerSlide
@@ -184,8 +185,36 @@ function Home() {
     },
   ];
 
+  const mediaPartnersPerSlide = 2;
+  const totalMediaPartnerSlides = Math.ceil(
+    mediaPartners.length / mediaPartnersPerSlide
+  );
+
+  useEffect(() => {
+    const carouselTimer = setInterval(() => {
+      setSponsorSlide((currentSlide) =>
+        currentSlide === totalSponsorSlides - 1 ? 0 : currentSlide + 1
+      );
+      setMediaPartnerSlide((currentSlide) =>
+        currentSlide === totalMediaPartnerSlides - 1 ? 0 : currentSlide + 1
+      );
+    }, 4000);
+
+    return () => clearInterval(carouselTimer);
+  }, [totalMediaPartnerSlides, totalSponsorSlides]);
+
+  useEffect(() => {
+    const galleryTimer = setInterval(() => {
+      setActiveGallery((currentImage) =>
+        currentImage === gallery.length - 1 ? 0 : currentImage + 1
+      );
+    }, 4000);
+
+    return () => clearInterval(galleryTimer);
+  }, [gallery.length]);
+
   return (
-    <main className="min-h-screen overflow-hidden bg-gradient-to-br from-[#17233f] via-[#1d3c7a] to-[#174bc9] text-white">
+    <main className="min-h-screen overflow-hidden ">
 
       {/* =====================================================
           HERO
@@ -267,11 +296,19 @@ function Home() {
 
       <section className="mx-auto max-w-7xl px-6 pb-16 lg:px-12">
 
-        <div className="rounded-2xl bg-[#1c2b48] px-6 py-10 shadow-xl md:px-12">
+        <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 px-6 py-10 shadow-xl backdrop-blur-xl md:px-12">
+
+          {/* liquid glow layer khusus card ini */}
+          <div className="pointer-events-none absolute -left-20 -top-20 h-72 w-72 rounded-full bg-cyan-400/10 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-24 -right-16 h-80 w-80 rounded-full bg-blue-500/15 blur-3xl" />
+
+          <div className="relative z-10 grid gap-10 md:grid-cols-[0.9fr_1.1fr] md:items-center">
+
+          <div>
 
           {/* TITLE */}
 
-          <div className="text-center">
+          <div className="text-left">
 
             {/* <p className="mb-3 text-xs text-gray-300">
               ⓘ &nbsp; Tentang Duta Anti Narkoba
@@ -287,7 +324,7 @@ function Home() {
 
             </h2>
 
-            <p className="mx-auto mt-2 max-w-xl text-sm leading-relaxed text-gray-300">
+            <p className="mt-3 max-w-xl text-sm leading-7 text-gray-200 md:text-base">
 
               Duta Anti Narkoba (DAN) merupakan LSO yang
               berkomitmen menyuarakan gerakan anti narkoba
@@ -298,103 +335,77 @@ function Home() {
           </div>
 
 
-          {/* FEATURES */}
+          {/* ROLE */}
 
-          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-8">
 
-            <Feature
-              icon="🎓"
-              title="Program edukasi"
-              text="Program edukasi sekolah & kampus"
-            />
+            <h2 className="text-2xl font-bold md:text-3xl">
+              WHAT IS{" "}
+              <span className="text-cyan-400">
+                THE ROLE OF DUTA ANTI NARKOBA?
+              </span>
+            </h2>
 
-            <Feature
-              icon="👥"
-              title="Kegiatan sosial"
-              text="Kegiatan sosial & komunitas"
-            />
+            <p className="mt-3 text-sm leading-7 text-gray-200 md:text-base">
+              Duta Anti Narkoba berperan sebagai pelopor dan penggerak dalam
+              mencegah penyalahgunaan narkoba. Melalui edukasi, kampanye, dan
+              aksi nyata, Duta Anti Narkoba mengajak generasi muda untuk berani
+              menolak narkoba, memilih lingkungan yang positif, dan bersama-sama
+              menciptakan masa depan yang lebih sehat, aman, dan bebas narkoba.
+            </p>
 
-            <Feature
-              icon="📢"
-              title="Kampanye kreatif"
-              text="Kampanye kreatif & informatif"
-            />
-
-            <Feature
-              icon="♡"
-              title="Komitmen positif"
-              text="Komitmen positif & berdampak"
-            />
+          </div>
 
           </div>
 
 
-          {/* GALLERY */}
+          {/* VERTICAL GALLERY */}
 
-          <div className="relative mt-8">
+          <div className="relative w-full">
 
-            <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
+            <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-slate-800 shadow-xl">
 
-              {gallery.map((item, index) => (
-
-                <div
-                  key={index}
-                  className="h-24 md:h-28 overflow-hidden rounded-xl bg-slate-800"
-                >
-
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="h-full w-full object-cover"
-                  />
-
-                </div>
-
-              ))}
+              <div
+                className="transition-transform duration-700 ease-in-out"
+                style={{
+                  height: `${gallery.length * 100}%`,
+                  transform: `translateY(-${activeGallery * (100 / gallery.length)}%)`,
+                }}
+              >
+                {gallery.map((item) => (
+                  <div
+                    key={item.name}
+                    className="w-full"
+                    style={{ height: `${100 / gallery.length}%` }}
+                  >
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
 
             </div>
 
-
-            {/* LEFT BUTTON */}
-
-            {/* <button
-              onClick={previousGallery}
-              className="absolute -left-5 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border-2 border-white/70 bg-[#23365b] transition hover:bg-blue-500"
-            >
-              ←
-            </button> */}
-
-
-            {/* RIGHT BUTTON */}
-
-            {/* <button
-              onClick={nextGallery}
-              className="absolute -right-5 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border-2 border-white/70 bg-[#23365b] transition hover:bg-blue-500"
-            >
-              →
-            </button> */}
+            <div className="absolute right-4 top-1/2 flex -translate-y-1/2 flex-col gap-2 rounded-full bg-slate-950/40 p-2">
+              {gallery.map((item, index) => (
+                <button
+                  key={item.name}
+                  onClick={() => setActiveGallery(index)}
+                  aria-label={`Tampilkan ${item.name}`}
+                  className={`h-2 w-2 rounded-full transition-all ${activeGallery === index
+                    ? "h-6 bg-cyan-400"
+                    : "bg-white/50"
+                    }`}
+                />
+              ))}
+            </div>
 
           </div>
 
-
-          {/* DOTS */}
-
-          {/* <div className="mt-5 flex justify-center gap-2">
-
-            {gallery.map((_, index) => (
-
-              <button
-                key={index}
-                onClick={() => setActiveGallery(index)}
-                className={`h-1 rounded-full transition-all ${index === activeGallery
-                  ? "w-6 bg-cyan-400"
-                  : "w-5 bg-gray-600"
-                  }`}
-              />
-
-            ))}
-
-          </div> */}
+          </div>
 
         </div>
 
@@ -532,7 +543,7 @@ function Home() {
 
       <section className="mx-auto max-w-7xl px-6 pb-16 lg:px-12">
 
-        <div className="rounded-2xl bg-[#1c2b48] px-6 py-10 shadow-xl md:px-12">
+        <div className="rounded-2xl border border-white/10 bg-white/5 px-6 py-10 shadow-xl backdrop-blur-xl md:px-12">
 
           <div className="text-center">
 
@@ -600,36 +611,27 @@ function Home() {
           SPONSORS & MEDIA PARTNERS
       ====================================================== */}
 
-      <section className="mx-auto grid max-w-7xl gap-5 px-6 pb-16 md:grid-cols-2 lg:px-12">
+      <section className="mx-auto max-w-7xl space-y-5 px-6 pb-16 lg:px-12">
 
 
         {/* SPONSORS */}
 
-        <div className="rounded-2xl bg-[#1c2b48] px-8 py-10 text-center shadow-xl">
+        <div className="rounded-2xl border border-white/10 bg-white/5 px-6 py-8 shadow-xl backdrop-blur-xl md:px-10">
 
-          {/* Icon */}
-          <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-blue-700 text-xl">
-            🤝
-          </div>
-
-          {/* Title */}
-          <h2 className="mt-4 text-2xl font-bold text-white">
+          <h2 className="text-2xl font-bold text-white">
             Our{" "}
             <span className="text-cyan-400">
               Sponsors
             </span>
           </h2>
 
-          {/* Description */}
-          <p className="mx-auto mt-2 max-w-sm text-sm text-gray-300">
+          <p className="mt-2 max-w-xl text-sm text-gray-300">
             Terima kasih kepada sponsor yang telah
             mendukung gerakan anti narkoba.
           </p>
 
-          {/* CAROUSEL */}
-          <div className="mt-8 flex items-center justify-center gap-3">
+          <div className="mt-8 flex items-center gap-3">
 
-            {/* LEFT BUTTON */}
             <button
               onClick={() =>
                 setSponsorSlide(
@@ -638,14 +640,13 @@ function Home() {
                     : sponsorSlide - 1
                 )
               }
+              aria-label="Sponsor sebelumnya"
               className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/40 text-xl text-white transition hover:bg-white/10"
             >
               ←
             </button>
 
-
-            {/* LOGOS */}
-            <div className="w-full max-w-md overflow-hidden">
+            <div className="min-w-0 flex-1 overflow-hidden">
 
               <div className="grid grid-cols-2 gap-3">
 
@@ -657,7 +658,7 @@ function Home() {
                   .map((sponsor) => (
                     <div
                       key={sponsor.name}
-                      className="flex h-20 items-center justify-center rounded-lg bg-white p-3 transition duration-300 hover:scale-105"
+                        className="flex h-28 items-center justify-center rounded-lg bg-white p-3 transition duration-300 hover:scale-[1.02] md:h-32"
                     >
                       <img
                         src={sponsor.image}
@@ -672,7 +673,6 @@ function Home() {
             </div>
 
 
-            {/* RIGHT BUTTON */}
             <button
               onClick={() =>
                 setSponsorSlide(
@@ -681,6 +681,7 @@ function Home() {
                     : sponsorSlide + 1
                 )
               }
+              aria-label="Sponsor berikutnya"
               className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/40 text-xl text-white transition hover:bg-white/10"
             >
               →
@@ -689,7 +690,6 @@ function Home() {
           </div>
 
 
-          {/* SLIDE INDICATOR */}
           <div className="mt-5 flex justify-center gap-2">
 
             {Array.from({ length: totalSponsorSlides }).map(
@@ -713,36 +713,49 @@ function Home() {
 
         {/* MEDIA PARTNERS */}
 
-        <div className="rounded-2xl bg-[#1c2b48] px-8 py-10 text-center shadow-xl">
+        <div className="rounded-2xl border border-white/10 bg-white/5 px-6 py-8 shadow-xl backdrop-blur-xl md:px-10">
 
-          {/* Icon */}
-          <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-blue-700 text-xl">
-            📣
-          </div>
-
-          {/* Title */}
-          <h2 className="mt-4 text-2xl font-bold text-white">
+          <h2 className="text-2xl font-bold text-white">
             Media{" "}
             <span className="text-cyan-400">
               Partners
             </span>
           </h2>
 
-          {/* Description */}
-          <p className="mx-auto mt-2 max-w-sm text-sm text-gray-300">
+          <p className="mt-2 max-w-xl text-sm text-gray-300">
             Berkolaborasi dengan media untuk menyebarkan
-            <br />edukasi dan informasi positif.
+            edukasi dan informasi positif.
           </p>
 
-          {/* LOGO CONTAINER */}
-          <div className="mt-8 rounded-xl bg-[#19263d] p-6">
+          <div className="mt-8 flex items-center gap-3">
 
-            <div className="grid grid-cols-3 gap-3 sm:grid-cols-5">
+            <button
+              onClick={() =>
+                setMediaPartnerSlide(
+                  mediaPartnerSlide === 0
+                    ? totalMediaPartnerSlides - 1
+                    : mediaPartnerSlide - 1
+                )
+              }
+              aria-label="Media partner sebelumnya"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/40 text-xl text-white transition hover:bg-white/10"
+            >
+              ←
+            </button>
 
-              {mediaPartners.map((partner) => (
+            <div className="min-w-0 flex-1 overflow-hidden">
+
+              <div className="grid grid-cols-2 gap-3">
+
+              {mediaPartners
+                .slice(
+                  mediaPartnerSlide * mediaPartnersPerSlide,
+                  mediaPartnerSlide * mediaPartnersPerSlide + mediaPartnersPerSlide
+                )
+                .map((partner) => (
                 <div
                   key={partner.name}
-                  className="flex h-16 items-center justify-center rounded-lg bg-white p-2 transition duration-300 hover:scale-105"
+                  className="flex h-28 items-center justify-center rounded-lg bg-white p-3 transition duration-300 hover:scale-[1.02] md:h-32"
                 >
                   <img
                     src={partner.image}
@@ -750,18 +763,45 @@ function Home() {
                     className="max-h-full max-w-full object-contain"
                   />
                 </div>
-              ))}
+                ))}
 
             </div>
 
+            </div>
+
+            <button
+              onClick={() =>
+                setMediaPartnerSlide(
+                  mediaPartnerSlide === totalMediaPartnerSlides - 1
+                    ? 0
+                    : mediaPartnerSlide + 1
+                )
+              }
+              aria-label="Media partner berikutnya"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/40 text-xl text-white transition hover:bg-white/10"
+            >
+              →
+            </button>
+
           </div>
 
-          {/* SLIDER INDICATOR
           <div className="mt-5 flex justify-center gap-2">
-            <span className="h-1 w-6 rounded-full bg-gray-600"></span>
-            <span className="h-1 w-6 rounded-full bg-cyan-400"></span>
-            <span className="h-1 w-6 rounded-full bg-gray-600"></span>
-          </div> */}
+
+            {Array.from({ length: totalMediaPartnerSlides }).map(
+              (_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setMediaPartnerSlide(index)}
+                  aria-label={`Tampilkan media partner slide ${index + 1}`}
+                  className={`h-1 rounded-full transition-all ${mediaPartnerSlide === index
+                    ? "w-8 bg-cyan-400"
+                    : "w-5 bg-gray-600"
+                    }`}
+                />
+              )
+            )}
+
+          </div>
 
         </div>
 

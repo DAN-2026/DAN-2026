@@ -1,8 +1,10 @@
 import { useState } from "react";
+import SolarSystem from "../../Components/SolarSystem";
 
 {/*BUAT FOOTER*/}
-import danImage from "../../assets/images/logo-dan.png";
-import umnImage from "../../assets/images/logo-umn.png";
+import danImage from "../../assets/logoutama/logo-dan.png";
+import umnImage from "../../assets/logoutama/logo-umn.png";
+
 
 function FAQ({Qstn,Answ})
 {
@@ -32,10 +34,10 @@ function FAQ({Qstn,Answ})
   );
 }
 
-function Home() 
+function AboutUs() 
 {
   return (
-    <main className="pt-8 min-h-screen overflow-hidden bg-gradient-to-br from-[#17233f] via-[#1d3c7a] to-[#174bc9] text-white">
+    <main className="pt-8 min-h-screen overflow-hidden ">
       <div className="mx-auto max-w-7xl px-6 pb-20 pt-16 lg:px-12">
         
         <div className="grid items-center gap-12 lg:grid-cols-2">
@@ -99,75 +101,86 @@ function Home()
           </div>      
         </div>
 
-        <div className="pt-12 grid items-center gap-12">
+        <div className="pt-12">
           <div>
-            <h1 className="text-white text-5xl font-extrabold leading-tight md:text-5xl">
-              Visi, Misi, 
-              <span className="text-cyan-400 ml-3">
-                  dan Tagline
-              </span>
+            <h1 className="text-white text-4xl font-extrabold leading-tight md:text-5xl">
+              Visi, Misi, <span className="text-cyan-400">dan Tagline</span>
             </h1>
-            <p className="mt-5 max-w-md text-base leading-relaxed text-gray-200">
-              Kami berkomitmen untuk menciptakan generasi muda yang 
-              sehat, berkarakter, dan bebas dari penyalahgunaan narkoba 
-              melalui edukasi, aksi, nyata, dan kolaborasi bersama.
+            <p className="mt-4 max-w-2xl text-sm leading-7 text-gray-200 md:text-base">
+              Kami berkomitmen untuk menciptakan generasi muda yang sehat,
+              berkarakter, dan bebas dari penyalahgunaan narkoba melalui
+              edukasi, aksi nyata, dan kolaborasi bersama.
             </p>
           </div>      
         </div>
 
-        <div className="pb-10 grid items-center gap-12 lg:grid-cols-3">
-          <div className="flex h-[280px] items-center justify-center overflow-hidden 
-          rounded-2xl bg-slate-800 shadow-2xl md:h-[400px] mt-6">
-            <div className="text-center">
-              <p className="text-left pl-10 pb-5 text-white text-5xl font-bold leading-tight md:text-4xl">
+        <div className="grid gap-6 pb-10 pt-8 lg:grid-cols-3">
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-xl backdrop-blur-xl md:p-8">
+            <div>
+              <p className="text-3xl font-bold leading-tight text-white md:text-4xl">
                 Visi
               </p>
-              <p className="text-left pl-10 pr-10 pb-7 max-w-md text-base leading-relaxed text-gray-200">
+              <p className="mt-5 text-sm leading-7 text-gray-200 md:text-base">
                 Menjadi lembaga generasi yang berintegritas, berdaya saing, dan berkontribusi dalam mewujudukan Indonesia yang bebas dari narkoba.
               </p>
             </div>
           </div>
 
-          <div className="flex h-[280px] items-center justify-center overflow-hidden 
-          rounded-2xl bg-slate-800 shadow-2xl md:h-[400px] mt-8">
-            <div className="text-left pl-10 pr-10">
-              <p className="text-left pl-10 pb-5 text-white text-5xl font-bold leading-tight md:text-4xl">
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-xl backdrop-blur-xl md:p-8">
+            <div>
+              <p className="text-3xl font-bold leading-tight text-white md:text-4xl">
                 Misi
               </p>
-              <div className="flex items-center gap-4 mb-2">
-                <span className="flex h-8 w-8 items-center justify-center 
-                rounded-full text-lg font-bold transition-colors bg-cyan-400/20 
-                text-cyan-400"> 1
-                </span><p>Menyelenggarakan edukasi dan sosialisasi tentang bahaya narkoba.</p>
-              </div>
-              <div className="flex items-center gap-4 mb-2">
-                <span className="flex h-8 w-8 items-center justify-center 
-                rounded-full text-lg font-bold transition-colors bg-cyan-400/20 
-                text-cyan-400"> 2
-                </span><p>Meningkatkan kesadaran dan peran generasi muda.</p>
-              </div>
-              <div className="flex items-center gap-4 mb-2">
-                <span className="flex h-8 w-8 items-center justify-center 
-                rounded-full text-lg font-bold transition-colors bg-cyan-400/20 
-                text-cyan-400"> 3
-                </span><p>Membangun kolaborasi dengan berbagai pihak untuk pencegahan dan penanggulangan narkoba.</p>
+              <div className="mt-5 space-y-4">
+                <div className="flex items-start gap-3">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-cyan-400/20 text-sm font-bold text-cyan-400">1</span>
+                  <p className="text-sm leading-6 text-gray-200">Menyelenggarakan edukasi dan sosialisasi tentang bahaya narkoba.</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-cyan-400/20 text-sm font-bold text-cyan-400">2</span>
+                  <p className="text-sm leading-6 text-gray-200">Meningkatkan kesadaran dan peran generasi muda.</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-cyan-400/20 text-sm font-bold text-cyan-400">3</span>
+                  <p className="text-sm leading-6 text-gray-200">Membangun kolaborasi dengan berbagai pihak untuk pencegahan dan penanggulangan narkoba.</p>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="flex h-[280px] items-center justify-center overflow-hidden 
-          rounded-2xl bg-slate-800 shadow-2xl md:h-[400px] mt-6">
-            <div className="text-center">
-              <p className="text-left pl-10 pb-4 text-white text-5xl font-bold leading-tight md:text-4xl">
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-xl backdrop-blur-xl md:p-8">
+            <div>
+              <p className="text-3xl font-bold leading-tight text-white md:text-4xl">
                 Tagline
               </p>
-              <p className="text-center pl-15 pr-15 pb-5 text-5xl font-bold leading-tight md:text-3xl text-cyan-400">
+              <p className="mt-5 text-2xl font-bold leading-tight text-cyan-400 md:text-3xl">
                 “Stay Sharp, Stay Strong, Stay Clean!”
               </p>
             </div>
           </div>
         </div>
       </div>
+
+       {/* TATA SURYA DIVISI */}
+      <section className="mx-auto max-w-7xl px-6 pb-20 lg:px-12">
+        <h1 className="text-white text-5xl font-extrabold leading-tight md:text-5xl">
+          Divisi <span className="text-cyan-400">Kami</span>
+        </h1>
+        <p className="mt-5 max-w-md text-base leading-relaxed text-gray-200">
+          Klik planet untuk mengenal tiap divisi.
+        </p>
+       <div
+        className="mt-8"
+        style={{
+          WebkitMaskImage:
+            'radial-gradient(ellipse closest-side at center, black 60%, transparent 100%)',
+          maskImage:
+            'radial-gradient(ellipse closest-side at center, black 60%, transparent 100%)',
+           }}
+        >
+        <SolarSystem />
+    </div>
+      </section>
 
       <footer className="bg-[#19263d]">
         <div className="mx-auto max-w-7xl px-6 py-12 lg:px-12">
@@ -277,4 +290,4 @@ function Home()
   );
 }
 
-export default Home;
+export default AboutUs;
