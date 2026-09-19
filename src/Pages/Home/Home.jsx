@@ -33,8 +33,6 @@ import sponsor7Image from "../../assets/sponsor/sponsor7.png";
 
 function Home() {
   const [activeGallery, setActiveGallery] = useState(0);
-  const [sponsorSlide, setSponsorSlide] = useState(0);
-  const [mediaPartnerSlide, setMediaPartnerSlide] = useState(0);
 
   const gallery = [
     {
@@ -113,23 +111,17 @@ function Home() {
     },
   ];
 
-  // const nextGallery = () => {
-  //   setActiveGallery((prev) =>
-  //     prev === gallery.length - 1 ? 0 : prev + 1
-  //   );
-  // };
+  const nextGallery = () => {
+    setActiveGallery((previousImage) =>
+      previousImage === gallery.length - 1 ? 0 : previousImage + 1
+    );
+  };
 
-  // const previousGallery = () => {
-  //   setActiveGallery((prev) =>
-  //     prev === 0 ? gallery.length - 1 : prev - 1
-  //   );
-  // };
-  const sponsorsPerSlide = 2;
-
-  const totalSponsorSlides = Math.ceil(
-    sponsors.length / sponsorsPerSlide
-  );
-
+  const previousGallery = () => {
+    setActiveGallery((previousImage) =>
+      previousImage === 0 ? gallery.length - 1 : previousImage - 1
+    );
+  };
   const mediaPartners = [
     {
       name: "ACCOUNTING CHARITY 2026",
@@ -184,24 +176,6 @@ function Home() {
       image: umnRadioImage,
     },
   ];
-
-  const mediaPartnersPerSlide = 2;
-  const totalMediaPartnerSlides = Math.ceil(
-    mediaPartners.length / mediaPartnersPerSlide
-  );
-
-  useEffect(() => {
-    const carouselTimer = setInterval(() => {
-      setSponsorSlide((currentSlide) =>
-        currentSlide === totalSponsorSlides - 1 ? 0 : currentSlide + 1
-      );
-      setMediaPartnerSlide((currentSlide) =>
-        currentSlide === totalMediaPartnerSlides - 1 ? 0 : currentSlide + 1
-      );
-    }, 4000);
-
-    return () => clearInterval(carouselTimer);
-  }, [totalMediaPartnerSlides, totalSponsorSlides]);
 
   useEffect(() => {
     const galleryTimer = setInterval(() => {
@@ -361,7 +335,7 @@ function Home() {
 
           {/* VERTICAL GALLERY */}
 
-          <div className="relative w-full">
+          <div className="group relative w-full">
 
             <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-slate-800 shadow-xl">
 
@@ -389,18 +363,24 @@ function Home() {
 
             </div>
 
-            <div className="absolute right-4 top-1/2 flex -translate-y-1/2 flex-col gap-2 rounded-full bg-slate-950/40 p-2">
-              {gallery.map((item, index) => (
-                <button
-                  key={item.name}
-                  onClick={() => setActiveGallery(index)}
-                  aria-label={`Tampilkan ${item.name}`}
-                  className={`h-2 w-2 rounded-full transition-all ${activeGallery === index
-                    ? "h-6 bg-cyan-400"
-                    : "bg-white/50"
-                    }`}
-                />
-              ))}
+            <div className="pointer-events-none absolute inset-x-0 top-0 flex justify-center pt-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
+              <button
+                onClick={previousGallery}
+                aria-label="Foto sebelumnya"
+                className="pointer-events-auto flex h-9 w-9 items-center justify-center rounded-full bg-slate-950/40 text-xl text-white transition hover:bg-slate-950/70"
+              >
+                ↑
+              </button>
+            </div>
+
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center pb-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
+              <button
+                onClick={nextGallery}
+                aria-label="Foto berikutnya"
+                className="pointer-events-auto flex h-9 w-9 items-center justify-center rounded-full bg-slate-950/40 text-xl text-white transition hover:bg-slate-950/70"
+              >
+                ↓
+              </button>
             </div>
 
           </div>
@@ -630,81 +610,22 @@ function Home() {
             mendukung gerakan anti narkoba.
           </p>
 
-          <div className="mt-8 flex items-center gap-3">
-
-            <button
-              onClick={() =>
-                setSponsorSlide(
-                  sponsorSlide === 0
-                    ? totalSponsorSlides - 1
-                    : sponsorSlide - 1
-                )
-              }
-              aria-label="Sponsor sebelumnya"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/40 text-xl text-white transition hover:bg-white/10"
-            >
-              ←
-            </button>
-
-            <div className="min-w-0 flex-1 overflow-hidden">
-
-              <div className="grid grid-cols-2 gap-3">
-
-                {sponsors
-                  .slice(
-                    sponsorSlide * sponsorsPerSlide,
-                    sponsorSlide * sponsorsPerSlide + sponsorsPerSlide
-                  )
-                  .map((sponsor) => (
-                    <div
-                      key={sponsor.name}
-                        className="flex h-28 items-center justify-center rounded-lg bg-white p-3 transition duration-300 hover:scale-[1.02] md:h-32"
-                    >
-                      <img
-                        src={sponsor.image}
-                        alt={sponsor.name}
-                        className="max-h-full max-w-full object-contain"
-                      />
-                    </div>
-                  ))}
-
-              </div>
-
+          <div className="sponsor-marquee mt-8" aria-label="Daftar sponsor">
+            <div className="sponsor-marquee-track">
+              {[...sponsors, ...sponsors].map((sponsor, index) => (
+                <div
+                  key={`${sponsor.name}-${index}`}
+                  className="sponsor-marquee-card flex h-28 items-center justify-center rounded-lg bg-white p-3 transition duration-300 hover:scale-[1.02] md:h-32"
+                >
+                  <img
+                    src={sponsor.image}
+                    alt={index >= sponsors.length ? "" : sponsor.name}
+                    aria-hidden={index >= sponsors.length}
+                    className="max-h-full max-w-full object-contain"
+                  />
+                </div>
+              ))}
             </div>
-
-
-            <button
-              onClick={() =>
-                setSponsorSlide(
-                  sponsorSlide === totalSponsorSlides - 1
-                    ? 0
-                    : sponsorSlide + 1
-                )
-              }
-              aria-label="Sponsor berikutnya"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/40 text-xl text-white transition hover:bg-white/10"
-            >
-              →
-            </button>
-
-          </div>
-
-
-          <div className="mt-5 flex justify-center gap-2">
-
-            {Array.from({ length: totalSponsorSlides }).map(
-              (_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setSponsorSlide(index)}
-                  className={`h-1 rounded-full transition-all ${sponsorSlide === index
-                    ? "w-8 bg-cyan-400"
-                    : "w-5 bg-gray-600"
-                    }`}
-                />
-              )
-            )}
-
           </div>
 
         </div>
@@ -727,80 +648,22 @@ function Home() {
             edukasi dan informasi positif.
           </p>
 
-          <div className="mt-8 flex items-center gap-3">
-
-            <button
-              onClick={() =>
-                setMediaPartnerSlide(
-                  mediaPartnerSlide === 0
-                    ? totalMediaPartnerSlides - 1
-                    : mediaPartnerSlide - 1
-                )
-              }
-              aria-label="Media partner sebelumnya"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/40 text-xl text-white transition hover:bg-white/10"
-            >
-              ←
-            </button>
-
-            <div className="min-w-0 flex-1 overflow-hidden">
-
-              <div className="grid grid-cols-2 gap-3">
-
-              {mediaPartners
-                .slice(
-                  mediaPartnerSlide * mediaPartnersPerSlide,
-                  mediaPartnerSlide * mediaPartnersPerSlide + mediaPartnersPerSlide
-                )
-                .map((partner) => (
+          <div className="sponsor-marquee mt-8" aria-label="Daftar media partner">
+            <div className="sponsor-marquee-track">
+              {[...mediaPartners, ...mediaPartners].map((partner, index) => (
                 <div
-                  key={partner.name}
-                  className="flex h-28 items-center justify-center rounded-lg bg-white p-3 transition duration-300 hover:scale-[1.02] md:h-32"
+                  key={`${partner.name}-${index}`}
+                  className="sponsor-marquee-card flex h-28 items-center justify-center rounded-lg bg-white p-3 transition duration-300 hover:scale-[1.02] md:h-32"
                 >
                   <img
                     src={partner.image}
-                    alt={partner.name}
+                    alt={index >= mediaPartners.length ? "" : partner.name}
+                    aria-hidden={index >= mediaPartners.length}
                     className="max-h-full max-w-full object-contain"
                   />
                 </div>
-                ))}
-
+              ))}
             </div>
-
-            </div>
-
-            <button
-              onClick={() =>
-                setMediaPartnerSlide(
-                  mediaPartnerSlide === totalMediaPartnerSlides - 1
-                    ? 0
-                    : mediaPartnerSlide + 1
-                )
-              }
-              aria-label="Media partner berikutnya"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/40 text-xl text-white transition hover:bg-white/10"
-            >
-              →
-            </button>
-
-          </div>
-
-          <div className="mt-5 flex justify-center gap-2">
-
-            {Array.from({ length: totalMediaPartnerSlides }).map(
-              (_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setMediaPartnerSlide(index)}
-                  aria-label={`Tampilkan media partner slide ${index + 1}`}
-                  className={`h-1 rounded-full transition-all ${mediaPartnerSlide === index
-                    ? "w-8 bg-cyan-400"
-                    : "w-5 bg-gray-600"
-                    }`}
-                />
-              )
-            )}
-
           </div>
 
         </div>
