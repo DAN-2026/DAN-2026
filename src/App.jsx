@@ -1,15 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import Navbar from './Components/Navbar';
+import Home from './Pages/Home/Home';
+import Event from './Pages/Event/Event';
+import AboutUs from './Pages/AboutUs/AboutUs';
 
 function App() {
   return (
-    <h1 className="text-3xl font-bold text-blue-800">
-      Tailwind Berhasil! Ini website DAN
-    </h1>
-  )
+    <BrowserRouter>
+      <Navbar />
+      <PageTransition />
+    </BrowserRouter>
+  );
 }
 
-export default App
+function PageTransition() {
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [location.pathname]);
+
+  return (
+    <div key={location.pathname} className="page-transition">
+      <Routes location={location}>
+        <Route path="/" element={<Home />} />
+        <Route path="/event" element={<Event />} />
+        <Route path="/about" element={<AboutUs />} />
+      </Routes>
+    </div>
+  );
+}
+
+export default App;
