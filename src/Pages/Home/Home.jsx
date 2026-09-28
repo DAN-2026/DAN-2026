@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import danImage from "../../assets/logoutama/logo-dan.png";
 import umnImage from "../../assets/logoutama/logo-umn.png";
@@ -32,8 +32,7 @@ import sponsor6Image from "../../assets/sponsor/sponsor6.png";
 import sponsor7Image from "../../assets/sponsor/sponsor7.png";
 
 function Home() {
-  // const [activeGallery, setActiveGallery] = useState(0);
-  const [sponsorSlide, setSponsorSlide] = useState(0);
+  const [activeGallery, setActiveGallery] = useState(0);
 
   const gallery = [
     {
@@ -112,23 +111,17 @@ function Home() {
     },
   ];
 
-  // const nextGallery = () => {
-  //   setActiveGallery((prev) =>
-  //     prev === gallery.length - 1 ? 0 : prev + 1
-  //   );
-  // };
+  const nextGallery = () => {
+    setActiveGallery((previousImage) =>
+      previousImage === gallery.length - 1 ? 0 : previousImage + 1
+    );
+  };
 
-  // const previousGallery = () => {
-  //   setActiveGallery((prev) =>
-  //     prev === 0 ? gallery.length - 1 : prev - 1
-  //   );
-  // };
-  const sponsorsPerSlide = 6;
-
-  const totalSponsorSlides = Math.ceil(
-    sponsors.length / sponsorsPerSlide
-  );
-
+  const previousGallery = () => {
+    setActiveGallery((previousImage) =>
+      previousImage === 0 ? gallery.length - 1 : previousImage - 1
+    );
+  };
   const mediaPartners = [
     {
       name: "ACCOUNTING CHARITY 2026",
@@ -184,8 +177,18 @@ function Home() {
     },
   ];
 
+  useEffect(() => {
+    const galleryTimer = setInterval(() => {
+      setActiveGallery((currentImage) =>
+        currentImage === gallery.length - 1 ? 0 : currentImage + 1
+      );
+    }, 4000);
+
+    return () => clearInterval(galleryTimer);
+  }, [gallery.length]);
+
   return (
-    <main className="min-h-screen overflow-hidden bg-gradient-to-br from-[#17233f] via-[#1d3c7a] to-[#174bc9] text-white">
+    <main className="min-h-screen overflow-hidden ">
 
       {/* =====================================================
           HERO
@@ -267,11 +270,19 @@ function Home() {
 
       <section className="mx-auto max-w-7xl px-6 pb-16 lg:px-12">
 
-        <div className="rounded-2xl bg-[#1c2b48] px-6 py-10 shadow-xl md:px-12">
+        <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 px-6 py-10 shadow-xl backdrop-blur-xl md:px-12">
+
+          {/* liquid glow layer khusus card ini */}
+          <div className="pointer-events-none absolute -left-20 -top-20 h-72 w-72 rounded-full bg-cyan-400/10 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-24 -right-16 h-80 w-80 rounded-full bg-blue-500/15 blur-3xl" />
+
+          <div className="relative z-10 grid gap-10 md:grid-cols-[0.9fr_1.1fr] md:items-center">
+
+          <div>
 
           {/* TITLE */}
 
-          <div className="text-center">
+          <div className="text-left">
 
             {/* <p className="mb-3 text-xs text-gray-300">
               ⓘ &nbsp; Tentang Duta Anti Narkoba
@@ -287,7 +298,7 @@ function Home() {
 
             </h2>
 
-            <p className="mx-auto mt-2 max-w-xl text-sm leading-relaxed text-gray-300">
+            <p className="mt-3 max-w-xl text-sm leading-7 text-gray-200 md:text-base">
 
               Duta Anti Narkoba (DAN) merupakan LSO yang
               berkomitmen menyuarakan gerakan anti narkoba
@@ -298,103 +309,83 @@ function Home() {
           </div>
 
 
-          {/* FEATURES */}
+          {/* ROLE */}
 
-          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-8">
 
-            <Feature
-              icon="🎓"
-              title="Program edukasi"
-              text="Program edukasi sekolah & kampus"
-            />
+            <h2 className="text-2xl font-bold md:text-3xl">
+              WHAT IS{" "}
+              <span className="text-cyan-400">
+                THE ROLE OF DUTA ANTI NARKOBA?
+              </span>
+            </h2>
 
-            <Feature
-              icon="👥"
-              title="Kegiatan sosial"
-              text="Kegiatan sosial & komunitas"
-            />
+            <p className="mt-3 text-sm leading-7 text-gray-200 md:text-base">
+              Duta Anti Narkoba berperan sebagai pelopor dan penggerak dalam
+              mencegah penyalahgunaan narkoba. Melalui edukasi, kampanye, dan
+              aksi nyata, Duta Anti Narkoba mengajak generasi muda untuk berani
+              menolak narkoba, memilih lingkungan yang positif, dan bersama-sama
+              menciptakan masa depan yang lebih sehat, aman, dan bebas narkoba.
+            </p>
 
-            <Feature
-              icon="📢"
-              title="Kampanye kreatif"
-              text="Kampanye kreatif & informatif"
-            />
-
-            <Feature
-              icon="♡"
-              title="Komitmen positif"
-              text="Komitmen positif & berdampak"
-            />
+          </div>
 
           </div>
 
 
-          {/* GALLERY */}
+          {/* VERTICAL GALLERY */}
 
-          <div className="relative mt-8">
+          <div className="group relative w-full">
 
-            <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
+            <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-slate-800 shadow-xl">
 
-              {gallery.map((item, index) => (
-
-                <div
-                  key={index}
-                  className="h-24 md:h-28 overflow-hidden rounded-xl bg-slate-800"
-                >
-
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="h-full w-full object-cover"
-                  />
-
-                </div>
-
-              ))}
+              <div
+                className="transition-transform duration-700 ease-in-out"
+                style={{
+                  height: `${gallery.length * 100}%`,
+                  transform: `translateY(-${activeGallery * (100 / gallery.length)}%)`,
+                }}
+              >
+                {gallery.map((item) => (
+                  <div
+                    key={item.name}
+                    className="w-full"
+                    style={{ height: `${100 / gallery.length}%` }}
+                  >
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
 
             </div>
 
+            <div className="pointer-events-none absolute inset-x-0 top-0 flex justify-center pt-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
+              <button
+                onClick={previousGallery}
+                aria-label="Foto sebelumnya"
+                className="pointer-events-auto flex h-9 w-9 items-center justify-center rounded-full bg-slate-950/40 text-xl text-white transition hover:bg-slate-950/70"
+              >
+                ↑
+              </button>
+            </div>
 
-            {/* LEFT BUTTON */}
-
-            {/* <button
-              onClick={previousGallery}
-              className="absolute -left-5 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border-2 border-white/70 bg-[#23365b] transition hover:bg-blue-500"
-            >
-              ←
-            </button> */}
-
-
-            {/* RIGHT BUTTON */}
-
-            {/* <button
-              onClick={nextGallery}
-              className="absolute -right-5 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border-2 border-white/70 bg-[#23365b] transition hover:bg-blue-500"
-            >
-              →
-            </button> */}
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center pb-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
+              <button
+                onClick={nextGallery}
+                aria-label="Foto berikutnya"
+                className="pointer-events-auto flex h-9 w-9 items-center justify-center rounded-full bg-slate-950/40 text-xl text-white transition hover:bg-slate-950/70"
+              >
+                ↓
+              </button>
+            </div>
 
           </div>
 
-
-          {/* DOTS */}
-
-          {/* <div className="mt-5 flex justify-center gap-2">
-
-            {gallery.map((_, index) => (
-
-              <button
-                key={index}
-                onClick={() => setActiveGallery(index)}
-                className={`h-1 rounded-full transition-all ${index === activeGallery
-                  ? "w-6 bg-cyan-400"
-                  : "w-5 bg-gray-600"
-                  }`}
-              />
-
-            ))}
-
-          </div> */}
+          </div>
 
         </div>
 
@@ -532,7 +523,7 @@ function Home() {
 
       <section className="mx-auto max-w-7xl px-6 pb-16 lg:px-12">
 
-        <div className="rounded-2xl bg-[#1c2b48] px-6 py-10 shadow-xl md:px-12">
+        <div className="rounded-2xl border border-white/10 bg-white/5 px-6 py-10 shadow-xl backdrop-blur-xl md:px-12">
 
           <div className="text-center">
 
@@ -600,111 +591,41 @@ function Home() {
           SPONSORS & MEDIA PARTNERS
       ====================================================== */}
 
-      <section className="mx-auto grid max-w-7xl gap-5 px-6 pb-16 md:grid-cols-2 lg:px-12">
+      <section className="mx-auto max-w-7xl space-y-5 px-6 pb-16 lg:px-12">
 
 
         {/* SPONSORS */}
 
-        <div className="rounded-2xl bg-[#1c2b48] px-8 py-10 text-center shadow-xl">
+        <div className="rounded-2xl border border-white/10 bg-white/5 px-6 py-8 shadow-xl backdrop-blur-xl md:px-10">
 
-          {/* Icon */}
-          <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-blue-700 text-xl">
-            🤝
-          </div>
-
-          {/* Title */}
-          <h2 className="mt-4 text-2xl font-bold text-white">
+          <h2 className="text-2xl font-bold text-white">
             Our{" "}
             <span className="text-cyan-400">
               Sponsors
             </span>
           </h2>
 
-          {/* Description */}
-          <p className="mx-auto mt-2 max-w-sm text-sm text-gray-300">
+          <p className="mt-2 max-w-xl text-sm text-gray-300">
             Terima kasih kepada sponsor yang telah
             mendukung gerakan anti narkoba.
           </p>
 
-          {/* CAROUSEL */}
-          <div className="mt-8 flex items-center justify-center gap-3">
-
-            {/* LEFT BUTTON */}
-            <button
-              onClick={() =>
-                setSponsorSlide(
-                  sponsorSlide === 0
-                    ? totalSponsorSlides - 1
-                    : sponsorSlide - 1
-                )
-              }
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/40 text-xl text-white transition hover:bg-white/10"
-            >
-              ←
-            </button>
-
-
-            {/* LOGOS */}
-            <div className="w-full max-w-md overflow-hidden">
-
-              <div className="grid grid-cols-2 gap-3">
-
-                {sponsors
-                  .slice(
-                    sponsorSlide * sponsorsPerSlide,
-                    sponsorSlide * sponsorsPerSlide + sponsorsPerSlide
-                  )
-                  .map((sponsor) => (
-                    <div
-                      key={sponsor.name}
-                      className="flex h-20 items-center justify-center rounded-lg bg-white p-3 transition duration-300 hover:scale-105"
-                    >
-                      <img
-                        src={sponsor.image}
-                        alt={sponsor.name}
-                        className="max-h-full max-w-full object-contain"
-                      />
-                    </div>
-                  ))}
-
-              </div>
-
+          <div className="sponsor-marquee mt-8" aria-label="Daftar sponsor">
+            <div className="sponsor-marquee-track">
+              {[...sponsors, ...sponsors].map((sponsor, index) => (
+                <div
+                  key={`${sponsor.name}-${index}`}
+                  className="sponsor-marquee-card flex h-28 items-center justify-center rounded-lg bg-white p-3 transition duration-300 hover:scale-[1.02] md:h-32"
+                >
+                  <img
+                    src={sponsor.image}
+                    alt={index >= sponsors.length ? "" : sponsor.name}
+                    aria-hidden={index >= sponsors.length}
+                    className="max-h-full max-w-full object-contain"
+                  />
+                </div>
+              ))}
             </div>
-
-
-            {/* RIGHT BUTTON */}
-            <button
-              onClick={() =>
-                setSponsorSlide(
-                  sponsorSlide === totalSponsorSlides - 1
-                    ? 0
-                    : sponsorSlide + 1
-                )
-              }
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/40 text-xl text-white transition hover:bg-white/10"
-            >
-              →
-            </button>
-
-          </div>
-
-
-          {/* SLIDE INDICATOR */}
-          <div className="mt-5 flex justify-center gap-2">
-
-            {Array.from({ length: totalSponsorSlides }).map(
-              (_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setSponsorSlide(index)}
-                  className={`h-1 rounded-full transition-all ${sponsorSlide === index
-                    ? "w-8 bg-cyan-400"
-                    : "w-5 bg-gray-600"
-                    }`}
-                />
-              )
-            )}
-
           </div>
 
         </div>
@@ -713,55 +634,37 @@ function Home() {
 
         {/* MEDIA PARTNERS */}
 
-        <div className="rounded-2xl bg-[#1c2b48] px-8 py-10 text-center shadow-xl">
+        <div className="rounded-2xl border border-white/10 bg-white/5 px-6 py-8 shadow-xl backdrop-blur-xl md:px-10">
 
-          {/* Icon */}
-          <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-blue-700 text-xl">
-            📣
-          </div>
-
-          {/* Title */}
-          <h2 className="mt-4 text-2xl font-bold text-white">
+          <h2 className="text-2xl font-bold text-white">
             Media{" "}
             <span className="text-cyan-400">
               Partners
             </span>
           </h2>
 
-          {/* Description */}
-          <p className="mx-auto mt-2 max-w-sm text-sm text-gray-300">
+          <p className="mt-2 max-w-xl text-sm text-gray-300">
             Berkolaborasi dengan media untuk menyebarkan
-            <br />edukasi dan informasi positif.
+            edukasi dan informasi positif.
           </p>
 
-          {/* LOGO CONTAINER */}
-          <div className="mt-8 rounded-xl bg-[#19263d] p-6">
-
-            <div className="grid grid-cols-3 gap-3 sm:grid-cols-5">
-
-              {mediaPartners.map((partner) => (
+          <div className="sponsor-marquee mt-8" aria-label="Daftar media partner">
+            <div className="sponsor-marquee-track">
+              {[...mediaPartners, ...mediaPartners].map((partner, index) => (
                 <div
-                  key={partner.name}
-                  className="flex h-16 items-center justify-center rounded-lg bg-white p-2 transition duration-300 hover:scale-105"
+                  key={`${partner.name}-${index}`}
+                  className="sponsor-marquee-card flex h-28 items-center justify-center rounded-lg bg-white p-3 transition duration-300 hover:scale-[1.02] md:h-32"
                 >
                   <img
                     src={partner.image}
-                    alt={partner.name}
+                    alt={index >= mediaPartners.length ? "" : partner.name}
+                    aria-hidden={index >= mediaPartners.length}
                     className="max-h-full max-w-full object-contain"
                   />
                 </div>
               ))}
-
             </div>
-
           </div>
-
-          {/* SLIDER INDICATOR
-          <div className="mt-5 flex justify-center gap-2">
-            <span className="h-1 w-6 rounded-full bg-gray-600"></span>
-            <span className="h-1 w-6 rounded-full bg-cyan-400"></span>
-            <span className="h-1 w-6 rounded-full bg-gray-600"></span>
-          </div> */}
 
         </div>
 
