@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
+import { CalendarDays, Images, X } from "lucide-react";
 import danImage from "../../assets/logoutama/logo-dan.png";
 import danNoTeksImage from "../../assets/logoutama/logo-noteks.png";
 import umnImage from "../../assets/logoutama/logo-umn.png";
+import galleryImage1 from "../../assets/gallery/gallery1.jpg";
+import galleryImage2 from "../../assets/gallery/gallery2.jpg";
+import galleryImage3 from "../../assets/gallery/gallery3.jpg";
+import galleryImage4 from "../../assets/gallery/gallery4.jpg";
+import galleryImage5 from "../../assets/gallery/gallery5.jpg";
 // import bemImage from "../../assets/logoutama/logo-bem.png"; // TODO: aktifkan kalau asetnya udah ada
 
 // Tanggal Awarding Night 2026 — ganti kalau tanggal pastinya beda
@@ -12,6 +19,15 @@ const CATEGORY_STYLES = {
   DGTS: "from-blue-500 to-blue-900",
   Awarding: "from-indigo-900 to-slate-950",
 };
+
+const adwGalleryImporters = Object.entries(
+  import.meta.glob("../../assets/gallery/ADW/*.{JPG,jpg,jpeg,png,webp}", {
+    eager: false,
+    import: "default",
+  })
+).sort(([pathA], [pathB]) => pathA.localeCompare(pathB));
+
+const adwGalleryPhotoCount = adwGalleryImporters.length;
 
 const events = [
   {
@@ -24,7 +40,7 @@ const events = [
     date: "15 Mar 2026",
     location: "Universitas Multimedia Nusantara",
     participants: "200+ Peserta",
-    photoCount: 41,
+    photoCount: adwGalleryPhotoCount,
   },
   {
     id: 2,
@@ -53,6 +69,7 @@ const events = [
 ];
 
 const FILTERS = ["All", "ADW", "DGTS", "Awarding"];
+const galleryPhotos = [galleryImage1, galleryImage2, galleryImage3, galleryImage4, galleryImage5];
 
 // --- Icon kecil (inline SVG, konsisten sama gaya Navbar.jsx) ---
 function IconCalendar() {
@@ -134,10 +151,153 @@ function CountdownBox({ value, label }) {
   );
 }
 
+function AlbumOverlay({ album, onClose }) {
+  const [activePhoto, setActivePhoto] = useState(null);
+  const [adwGalleryPhotos, setAdwGalleryPhotos] = useState([]);
+
+  useEffect(() => {
+    if (album.category !== "ADW") return;
+
+    let isMounted = true;
+    Promise.all(adwGalleryImporters.map(([, importer]) => importer())).then((photos) => {
+      if (!isMounted) return;
+      setAdwGalleryPhotos(photos.map((photo) => photo.default ?? photo));
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [album.category]);
+
+  const photos = album.category === "ADW" ? adwGalleryPhotos : galleryPhotos;
+
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        if (activePhoto) setActivePhoto(null);
+        else onClose();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [activePhoto, onClose]);
+
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm sm:p-6"
+      onClick={onClose}
+    >
+      <div className="w-full max-w-3xl" onClick={(event) => event.stopPropagation()}>
+        <h2 className="mb-2 px-1 text-sm font-medium tracking-wide text-white/60">OVERLAY GALERI</h2>
+        <section className="overflow-hidden rounded-xl bg-slate-900 shadow-2xl">
+          <header className="flex items-start justify-between gap-4 bg-gradient-to-r from-blue-700 to-blue-950 px-4 py-4 sm:px-6">
+            <div>
+              <h3 className="font-bold text-white">
+                {album.title} {album.titleHighlight}
+              </h3>
+              <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-blue-100">
+                <span className="flex items-center gap-1.5"><CalendarDays className="h-3.5 w-3.5" />{album.date}</span>
+                <span className="flex items-center gap-1.5"><Images className="h-3.5 w-3.5" />{album.photoCount} foto</span>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Tutup overlay galeri"
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/15 text-white transition hover:bg-white/25"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </header>
+
+          <div className="max-h-[min(65vh,560px)] overflow-y-auto p-3 sm:p-4">
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3 md:grid-cols-4">
+              {photos.map((photo, index) => (
+                <button
+                  key={photo}
+                  type="button"
+                  onClick={() => setActivePhoto(photo)}
+                  aria-label={`Perbesar foto ${index + 1}`}
+                  className="group aspect-square overflow-hidden rounded-lg bg-slate-700 outline-none ring-cyan-400 transition focus-visible:ring-2"
+                >
+                  <img
+                    src={photo}
+                    alt={`${album.title}, foto ${index + 1}`}
+                    className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </button>
+              ))}
+            </div>
+          </div>
+          <p className="px-4 pb-3 text-center text-xs text-slate-400">Klik foto untuk memperbesar</p>
+        </section>
+      </div>
+
+      {activePhoto && (
+        <div
+          className="fixed inset-0 z-[110] flex items-center justify-center bg-black/90 p-4"
+          onClick={() => setActivePhoto(null)}
+        >
+          <button
+            type="button"
+            onClick={() => setActivePhoto(null)}
+            aria-label="Tutup foto"
+            className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-white hover:bg-white/25"
+          >
+            <X className="h-5 w-5" />
+          </button>
+          <img
+            src={activePhoto}
+            alt={`Foto album ${album.title}`}
+            className="max-h-full max-w-full rounded-lg object-contain"
+            onClick={(event) => event.stopPropagation()}
+          />
+        </div>
+      )}
+    </div>,
+    document.body
+  );
+}
+
 function Event() {
   const [activeFilter, setActiveFilter] = useState("All");
   const [slide, setSlide] = useState(0);
+  const [selectedAlbum, setSelectedAlbum] = useState(null);
+  const [adwGalleryPhotos, setAdwGalleryPhotos] = useState([]);
+  const [adwHeroImage, setAdwHeroImage] = useState(null);
   const { days, hours, minutes, seconds } = useCountdown(TARGET_DATE);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    import("../../assets/gallery/ADW/DJI_20260627121848_0077_D.JPG")
+      .then((module) => {
+        if (!isMounted) return;
+        setAdwHeroImage(module.default ?? module);
+      })
+      .catch(() => {
+        if (!isMounted) return;
+        setAdwHeroImage(null);
+      });
+
+    Promise.all(adwGalleryImporters.map(([, importer]) => importer())).then((photos) => {
+      if (!isMounted) return;
+      setAdwGalleryPhotos(photos.map((photo) => photo.default ?? photo));
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const filteredGallery =
     activeFilter === "All" ? events : events.filter((e) => e.category === activeFilter);
@@ -147,7 +307,7 @@ function Event() {
   const current = events[slide];
 
   return (
-    <main className="min-h-screen overflow-hidden bg-gradient-to-br from-[#0a1230] via-[#15258f] to-[#3b5bf0] pt-32">
+    <main className="min-h-screen overflow-hidden pt-32">
       {/* HERO */}
       <section className="mx-auto grid max-w-7xl items-center gap-10 px-6 pb-16 lg:grid-cols-2 lg:px-12">
         <div>
@@ -171,7 +331,7 @@ function Event() {
           </div>
         </div>
 
-        <div className="relative mx-auto flex h-[380px] w-[380px] items-center justify-center md:h-[440px] md:w-[440px]">
+        <div className="relative mx-auto flex h-auto aspect-square w-full max-w-[380px] items-center justify-center md:h-[440px] md:w-[440px]">
           <div className="absolute inset-0 rounded-full bg-cyan-400 blur-3xl" />
           <div className="relative flex h-full w-full flex-col items-center justify-center rounded-full border border-white/20 bg-white/70 text-center shadow-2xl">
             <img src={danNoTeksImage} alt="Duta Anti Narkoba" className="h-28 w-auto object-contain md:h-32" />
@@ -214,6 +374,15 @@ function Event() {
             }`}
           >
             {/* TODO: ganti dengan foto asli event (background image) */}
+            {current.category === "ADW" && (
+              <img
+                src={adwHeroImage}
+                alt=""
+                aria-hidden="true"
+                fetchPriority="high"
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+            )}
             <div className="absolute inset-0 bg-black/30" />
 
             <button
@@ -245,7 +414,10 @@ function Event() {
                 {current.description}
               </p>
 
-              <button className="mt-6 flex items-center gap-2 rounded-full bg-cyan-400 px-5 py-2.5 text-sm font-semibold text-slate-900 transition hover:bg-cyan-300">
+              <button
+                onClick={() => setSelectedAlbum(current)}
+                className="mt-6 flex items-center gap-2 rounded-full bg-cyan-400 px-5 py-2.5 text-sm font-semibold text-slate-900 transition hover:bg-cyan-300"
+              >
                 <IconImage />
                 Lihat Album
               </button>
@@ -292,10 +464,20 @@ function Event() {
           {filteredGallery.map((e) => (
             <button
               key={e.id}
+              onClick={() => setSelectedAlbum(e)}
               className="group overflow-hidden rounded-2xl border border-white/10 bg-slate-900/40 text-left"
             >
               {/* TODO: ganti dengan foto asli album */}
-              <div className={`h-40 bg-gradient-to-br ${CATEGORY_STYLES[e.category]} relative`}>
+              <div className={`relative h-40 overflow-hidden bg-gradient-to-br ${CATEGORY_STYLES[e.category]}`}>
+                {e.category === "ADW" && adwGalleryPhotos[0] && (
+                  <img
+                    src={adwGalleryPhotos[0]}
+                    alt=""
+                    className="absolute inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
                 <span className="absolute right-3 top-3 rounded-full bg-black/40 px-3 py-1 text-xs font-medium text-white">
                   {e.category}
                 </span>
@@ -382,6 +564,7 @@ function Event() {
           </div>
         </div>
       </footer>
+      {selectedAlbum && <AlbumOverlay album={selectedAlbum} onClose={() => setSelectedAlbum(null)} />}
     </main>
   );
 }

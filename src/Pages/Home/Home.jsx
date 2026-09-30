@@ -3,90 +3,75 @@ import { useEffect, useState } from "react";
 import danImage from "../../assets/logoutama/logo-dan.png";
 import umnImage from "../../assets/logoutama/logo-umn.png";
 
-import galleryImage1 from "../../assets/gallery/gallery1.jpg";
-import galleryImage2 from "../../assets/gallery/gallery2.jpg";
-import galleryImage3 from "../../assets/gallery/gallery3.jpg";
-import galleryImage4 from "../../assets/gallery/gallery4.jpg";
-import galleryImage5 from "../../assets/gallery/gallery5.jpg";
+const galleryImageLoaders = import.meta.glob("../../assets/gallery/*.jpg", {
+  eager: false,
+  import: "default",
+});
 
-import accountingCharityImage from "../../assets/mediaPartner/ACCOUNTINGCHARITY 2026.png";
-import himsiImage from "../../assets/mediaPartner/HIMSI.jpg";
-import isfestImage from "../../assets/mediaPartner/ISFEST.jpg";
-import imkomImage from "../../assets/mediaPartner/IMKOM.png";
-import misterMissImage from "../../assets/mediaPartner/MISTERMISSTRANSPARENT.png";
-import starlightImage from "../../assets/mediaPartner/STARLIGHT.png";
-import teaterKataImage from "../../assets/mediaPartner/TeaterKataK.jpg";
-import traceImage from "../../assets/mediaPartner/TRACCE.png";
-import ultimagzImage from "../../assets/mediaPartner/Ultimagz.png";
-import umnEcoImage from "../../assets/mediaPartner/UMNECO_.png";
-import umnMedicalImage from "../../assets/mediaPartner/UMNMEDICALCENTER.png";
-import umnProgrammingImage from "../../assets/mediaPartner/UMNProgammingPC.png";
-import umnRadioImage from "../../assets/mediaPartner/UMNRADIO.png";
+const sponsorImageLoaders = import.meta.glob("../../assets/sponsor/*.{png,jpg,jpeg,webp}", {
+  eager: false,
+  import: "default",
+});
 
-import sponsor1Image from "../../assets/sponsor/sponsor1.png";
-import sponsor2Image from "../../assets/sponsor/sponsor2.png";
-import sponsor3Image from "../../assets/sponsor/sponsor3.png";
-import sponsor4Image from "../../assets/sponsor/sponsor4.png";
-import sponsor5Image from "../../assets/sponsor/sponsor5.png";
-import sponsor6Image from "../../assets/sponsor/sponsor6.png";
-import sponsor7Image from "../../assets/sponsor/sponsor7.png";
+const mediaPartnerImageLoaders = import.meta.glob("../../assets/mediaPartner/*.{png,jpg,jpeg,webp}", {
+  eager: false,
+  import: "default",
+});
+
+async function loadImage(importer) {
+  const mod = await importer();
+  return mod.default ?? mod;
+}
 
 function Home() {
   const [activeGallery, setActiveGallery] = useState(0);
+  const [gallery, setGallery] = useState([]);
+  const [sponsors, setSponsors] = useState([]);
+  const [mediaPartners, setMediaPartners] = useState([]);
 
-  const gallery = [
-    {
-      name: "Gallery 1",
-      image: galleryImage1,
-    },
-    {
-      name: "Gallery 2",
-      image: galleryImage2,
-    },
-    {
-      name: "Gallery 3",
-      image: galleryImage3,
-    },
-    {
-      name: "Gallery 4",
-      image: galleryImage4,
-    },
-    {
-      name: "Gallery 5",
-      image: galleryImage5,
-    },
-  ];
+  useEffect(() => {
+    let isMounted = true;
 
-  const sponsors = [
-    {
-      name: "Sponsor 1",
-      image: sponsor1Image,
-    },
-    {
-      name: "Sponsor 2",
-      image: sponsor2Image,
-    },
-    {
-      name: "Sponsor 3",
-      image: sponsor3Image,
-    },
-    {
-      name: "Sponsor 4",
-      image: sponsor4Image,
-    },
-    {
-      name: "Sponsor 5",
-      image: sponsor5Image,
-    },
-    {
-      name: "Sponsor 6",
-      image: sponsor6Image,
-    },
-    {
-      name: "Sponsor 7",
-      image: sponsor7Image,
-    },
-  ];
+    Promise.all(
+      Object.entries(galleryImageLoaders)
+        .sort(([pathA], [pathB]) => pathA.localeCompare(pathB))
+        .map(async ([path, importer]) => ({
+          name: path.split('/').pop(),
+          image: await loadImage(importer),
+        }))
+    ).then((entries) => {
+      if (!isMounted) return;
+      setGallery(entries);
+    });
+
+    Promise.all(
+      Object.entries(sponsorImageLoaders)
+        .sort(([pathA], [pathB]) => pathA.localeCompare(pathB))
+        .map(async ([path, importer]) => ({
+          name: path.split('/').pop().replace(/\.[^/.]+$/, ''),
+          image: await loadImage(importer),
+        }))
+    ).then((entries) => {
+      if (!isMounted) return;
+      setSponsors(entries);
+    });
+
+    Promise.all(
+      Object.entries(mediaPartnerImageLoaders)
+        .sort(([pathA], [pathB]) => pathA.localeCompare(pathB))
+        .map(async ([path, importer]) => ({
+          name: path.split('/').pop().replace(/\.[^/.]+$/, ''),
+          image: await loadImage(importer),
+        }))
+    ).then((entries) => {
+      if (!isMounted) return;
+      setMediaPartners(entries);
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const events = [
     {
@@ -94,20 +79,22 @@ function Home() {
       title: "UMN ADW 2026",
       description:
         "Program aksi kepedulian sosial bagi anak-anak pejuang kanker di YKAKI.",
-        name: "UMN ADW 2026",
-        image: galleryImage2,
+      name: "UMN ADW 2026",
+      image: gallery[1]?.image || '',
     },
     {
       date: "15 OKTOBER 2026",
       title: "DGTS 2026",
       description:
         "Program edukasi yang berfokus pada pencegahan penyalahgunaan narkoba di kalangan pelajar dan mahasiswa.",
+      image: gallery[2]?.image || '',
     },
     {
       date: "25 NOVEMBER 2026",
       title: "AWARDING NIGHT 2026",
       description:
         "Malam puncak bagi para peserta dan finalis yang telah berpartisipasi dalam kegiatan Duta Anti Narkoba.",
+      image: gallery[0]?.image || '',
     },
   ];
 
@@ -122,61 +109,6 @@ function Home() {
       previousImage === 0 ? gallery.length - 1 : previousImage - 1
     );
   };
-  const mediaPartners = [
-    {
-      name: "ACCOUNTING CHARITY 2026",
-      image: accountingCharityImage,
-    },
-    {
-      name: "HIMSI",
-      image: himsiImage,
-    },
-    {
-      name: "IMKOM",
-      image: imkomImage,
-    },
-    {
-      name: "ISFEST",
-      image: isfestImage,
-    },
-    {
-      name: "MISTER MISS",
-      image: misterMissImage,
-    },
-    {
-      name: "STARLIGHT",
-      image: starlightImage,
-    },
-    {
-      name: "TeaterKataK",
-      image: teaterKataImage,
-    },
-    {
-      name: "TRACCE",
-      image: traceImage,
-    },
-    {
-      name: "Ultimagz",
-      image: ultimagzImage,
-    },
-    {
-      name: "UMNECO",
-      image: umnEcoImage,
-    },
-    {
-      name: "UMN Medical Center",
-      image: umnMedicalImage,
-    },
-    {
-      name: "UMN Programming PC",
-      image: umnProgrammingImage,
-    },
-    {
-      name: "UMN Radio",
-      image: umnRadioImage,
-    },
-  ];
-
   useEffect(() => {
     const galleryTimer = setInterval(() => {
       setActiveGallery((currentImage) =>
@@ -356,6 +288,8 @@ function Home() {
                       src={item.image}
                       alt={item.name}
                       className="h-full w-full object-cover"
+                      loading="lazy"
+                      decoding="async"
                     />
                   </div>
                 ))}
@@ -442,8 +376,10 @@ function Home() {
 
               <div className="absolute inset-0 flex items-center justify-center text-5xl opacity-20">
                 <img
-                src={event.image} 
-                alt={event.title} 
+                  src={event.image}
+                  alt={event.title}
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
 
@@ -622,6 +558,8 @@ function Home() {
                     alt={index >= sponsors.length ? "" : sponsor.name}
                     aria-hidden={index >= sponsors.length}
                     className="max-h-full max-w-full object-contain"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
               ))}
@@ -660,6 +598,8 @@ function Home() {
                     alt={index >= mediaPartners.length ? "" : partner.name}
                     aria-hidden={index >= mediaPartners.length}
                     className="max-h-full max-w-full object-contain"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
               ))}
