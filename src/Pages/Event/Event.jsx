@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
+import { useLocation } from "react-router-dom";
 import { CalendarDays, Images, X } from "lucide-react";
+import aboutUsBackground from "../../assets/Background DAN.png";
 import danImage from "../../assets/logoutama/logo-dan.png";
 import danNoTeksImage from "../../assets/logoutama/logo-noteks.png";
 import umnImage from "../../assets/logoutama/logo-umn.png";
@@ -269,12 +271,60 @@ function AlbumOverlay({ album, onClose }) {
 }
 
 function Event() {
+  const location = useLocation();
   const [activeFilter, setActiveFilter] = useState("All");
   const [slide, setSlide] = useState(0);
+  const [isCarouselPaused, setIsCarouselPaused] = useState(false);
   const [selectedAlbum, setSelectedAlbum] = useState(null);
   const [adwGalleryPhotos, setAdwGalleryPhotos] = useState([]);
   const [adwHeroImage, setAdwHeroImage] = useState(null);
   const { days, hours, minutes, seconds } = useCountdown(TARGET_DATE);
+
+  useEffect(() => {
+    const requestedCategory = location.state?.eventCategory;
+    if (!requestedCategory) return;
+
+    const requestedIndex = events.findIndex((event) => event.category === requestedCategory);
+    if (requestedIndex === -1) return;
+
+    setSlide(requestedIndex);
+    setSelectedAlbum(events[requestedIndex]);
+  }, [location.state]);
+
+  useEffect(() => {
+    if (isCarouselPaused || selectedAlbum) return;
+
+    const carouselTimer = window.setInterval(() => {
+      setSlide((currentSlide) => (currentSlide + 1) % events.length);
+    }, 5500);
+
+    return () => window.clearInterval(carouselTimer);
+  }, [isCarouselPaused, selectedAlbum, slide]);
+
+  useEffect(() => {
+    const bodyStyle = document.body.style;
+    const previousBackground = {
+      image: bodyStyle.backgroundImage,
+      size: bodyStyle.backgroundSize,
+      position: bodyStyle.backgroundPosition,
+      attachment: bodyStyle.backgroundAttachment,
+      repeat: bodyStyle.backgroundRepeat,
+    };
+
+    bodyStyle.backgroundImage = `linear-gradient(rgba(8, 19, 38, 0.35), rgba(8, 19, 38, 0.35)), url("${aboutUsBackground}")`;
+    bodyStyle.backgroundSize = "cover";
+    bodyStyle.backgroundPosition = "center";
+    bodyStyle.backgroundAttachment = "fixed";
+    bodyStyle.backgroundRepeat = "no-repeat";
+
+    return () => {
+      bodyStyle.backgroundImage = previousBackground.image;
+      bodyStyle.backgroundSize = previousBackground.size;
+      bodyStyle.backgroundPosition = previousBackground.position;
+      bodyStyle.backgroundAttachment = previousBackground.attachment;
+      bodyStyle.backgroundRepeat = previousBackground.repeat;
+    };
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -367,7 +417,17 @@ function Event() {
 
       {/* CAROUSEL */}
       <section className="mx-auto mt-10 max-w-7xl px-6 lg:px-12">
-        <div className="relative overflow-hidden rounded-3xl">
+        <div
+          className="relative overflow-hidden rounded-3xl"
+          onMouseEnter={() => setIsCarouselPaused(true)}
+          onMouseLeave={() => setIsCarouselPaused(false)}
+          onFocusCapture={() => setIsCarouselPaused(true)}
+          onBlurCapture={(event) => {
+            if (!event.currentTarget.contains(event.relatedTarget)) {
+              setIsCarouselPaused(false);
+            }
+          }}
+        >
           <div
             className={`group relative flex min-h-[420px] flex-col justify-end bg-gradient-to-br p-8 md:p-12 ${
               CATEGORY_STYLES[current.category]

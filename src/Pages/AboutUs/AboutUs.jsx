@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
-import SolarSystem from "../../Components/SolarSystem";
+import { Suspense, lazy, useEffect, useState } from "react";
 import aboutUsBackground from "../../assets/Background DAN.png";
+
+const SolarSystem = lazy(() => import("../../Components/SolarSystem"));
 
 {/*BUAT FOOTER*/}
 import danImage from "../../assets/logoutama/logo-dan.png";
@@ -204,7 +205,9 @@ function AboutUs()
             'radial-gradient(ellipse closest-side at center, black 60%, transparent 100%)',
            }}
         >
-        <SolarSystem />
+        <Suspense fallback={<div className="flex h-[500px] w-full items-center justify-center rounded-2xl border border-white/10 bg-slate-900/40 text-sm text-slate-300 md:h-[650px]">Memuat divisi kami...</div>}>
+          <SolarSystem />
+        </Suspense>
     </div>
       </section>
 

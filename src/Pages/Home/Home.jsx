@@ -1,7 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import { Play, Volume2, VolumeX } from "lucide-react";
 
+import aboutUsBackground from "../../assets/Background DAN.png";
 import danImage from "../../assets/logoutama/logo-dan.png";
 import umnImage from "../../assets/logoutama/logo-umn.png";
+import mainHomeImage from "../../assets/logoutama/mainHome.JPG";
+import activityVideo from "../../assets/gallery/vidio kegiatan/DJI_20260627121917_0079_D.mp4";
 
 const galleryImageLoaders = import.meta.glob("../../assets/gallery/*.jpg", {
   eager: false,
@@ -28,6 +33,45 @@ function Home() {
   const [gallery, setGallery] = useState([]);
   const [sponsors, setSponsors] = useState([]);
   const [mediaPartners, setMediaPartners] = useState([]);
+  const [isActivityVideoPlaying, setIsActivityVideoPlaying] = useState(false);
+  const [isActivityVideoMuted, setIsActivityVideoMuted] = useState(true);
+  const activityVideoRef = useRef(null);
+
+  const toggleActivityVideo = () => {
+    const video = activityVideoRef.current;
+    if (!video) return;
+
+    if (video.paused) {
+      video.play().catch(() => setIsActivityVideoPlaying(false));
+    } else {
+      video.pause();
+    }
+  };
+
+  useEffect(() => {
+    const bodyStyle = document.body.style;
+    const previousBackground = {
+      image: bodyStyle.backgroundImage,
+      size: bodyStyle.backgroundSize,
+      position: bodyStyle.backgroundPosition,
+      attachment: bodyStyle.backgroundAttachment,
+      repeat: bodyStyle.backgroundRepeat,
+    };
+
+    bodyStyle.backgroundImage = `linear-gradient(rgba(8, 19, 38, 0.35), rgba(8, 19, 38, 0.35)), url("${aboutUsBackground}")`;
+    bodyStyle.backgroundSize = "cover";
+    bodyStyle.backgroundPosition = "center";
+    bodyStyle.backgroundAttachment = "fixed";
+    bodyStyle.backgroundRepeat = "no-repeat";
+
+    return () => {
+      bodyStyle.backgroundImage = previousBackground.image;
+      bodyStyle.backgroundSize = previousBackground.size;
+      bodyStyle.backgroundPosition = previousBackground.position;
+      bodyStyle.backgroundAttachment = previousBackground.attachment;
+      bodyStyle.backgroundRepeat = previousBackground.repeat;
+    };
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -75,6 +119,7 @@ function Home() {
 
   const events = [
     {
+      category: "ADW",
       date: "27 JUNI 2026",
       title: "UMN ADW 2026",
       description:
@@ -83,6 +128,7 @@ function Home() {
       image: gallery[1]?.image || '',
     },
     {
+      category: "DGTS",
       date: "15 OKTOBER 2026",
       title: "DGTS 2026",
       description:
@@ -90,6 +136,7 @@ function Home() {
       image: gallery[2]?.image || '',
     },
     {
+      category: "Awarding",
       date: "25 NOVEMBER 2026",
       title: "AWARDING NIGHT 2026",
       description:
@@ -155,39 +202,21 @@ function Home() {
               <br />live a drug-free life.
             </p>
 
-            <button className="mt-6 rounded-lg bg-blue-500 px-5 py-3 font-semibold transition hover:bg-blue-400">
-
+            <a href="#about-duta" className="mt-6 inline-flex items-center rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-cyan-500/20 transition duration-200 hover:scale-[1.02] hover:shadow-cyan-400/40">
               Learn More
-
-              <span className="ml-2">
-                →
-              </span>
-
-            </button>
+            </a>
 
           </div>
 
 
-          {/* IMAGE PLACEHOLDER */}
-
-          <div className="flex h-[280px] items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500/40 to-cyan-400/20 shadow-2xl md:h-[360px] mt-8">
-
-            <div className="text-center">
-
-              <div className="mb-3 text-5xl">
-                📷
-              </div>
-
-              <p className="text-sm text-gray-300">
-                Hero Image
-              </p>
-
-              <p className="mt-1 text-xs text-gray-400">
-                Masukkan gambar nanti
-              </p>
-
-            </div>
-
+          <div className="mt-8 h-[280px] overflow-hidden rounded-2xl shadow-2xl md:h-[360px]">
+            <img
+              src={mainHomeImage}
+              alt="Kegiatan Duta Anti Narkoba"
+              className="h-full w-full object-cover object-center"
+              fetchPriority="high"
+              decoding="async"
+            />
           </div>
 
         </div>
@@ -200,7 +229,7 @@ function Home() {
           ABOUT DUTA ANTI NARKOBA
       ====================================================== */}
 
-      <section className="mx-auto max-w-7xl px-6 pb-16 lg:px-12">
+      <section id="about-duta" className="mx-auto max-w-7xl scroll-mt-20 px-6 pb-16 lg:px-12">
 
         <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 px-6 py-10 shadow-xl backdrop-blur-xl md:px-12">
 
@@ -301,7 +330,7 @@ function Home() {
               <button
                 onClick={previousGallery}
                 aria-label="Foto sebelumnya"
-                className="pointer-events-auto flex h-9 w-9 items-center justify-center rounded-full bg-slate-950/40 text-xl text-white transition hover:bg-slate-950/70"
+                className="pointer-events-auto flex h-10 w-10 items-center justify-center rounded-full border border-cyan-100/40 bg-slate-950/55 text-xl text-white shadow-lg backdrop-blur-md transition duration-200 hover:scale-105 hover:border-cyan-200/70 hover:bg-cyan-400/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
               >
                 ↑
               </button>
@@ -311,7 +340,7 @@ function Home() {
               <button
                 onClick={nextGallery}
                 aria-label="Foto berikutnya"
-                className="pointer-events-auto flex h-9 w-9 items-center justify-center rounded-full bg-slate-950/40 text-xl text-white transition hover:bg-slate-950/70"
+                className="pointer-events-auto flex h-10 w-10 items-center justify-center rounded-full border border-cyan-100/40 bg-slate-950/55 text-xl text-white shadow-lg backdrop-blur-md transition duration-200 hover:scale-105 hover:border-cyan-200/70 hover:bg-cyan-400/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
               >
                 ↓
               </button>
@@ -411,11 +440,10 @@ function Home() {
                     {event.description}
                   </p>
 
-                  <button className="mt-3 rounded-md bg-white px-3 py-2 text-xs font-semibold text-gray-800 transition hover:bg-cyan-400">
-
-                    Lihat Detail →
-
-                  </button>
+                  <Link to="/event" state={{ eventCategory: event.category }} className="group/detail mt-3 inline-flex items-center gap-2 rounded-full border border-cyan-200/30 bg-cyan-300/10 px-4 py-2 text-xs font-semibold text-cyan-50 backdrop-blur-sm transition duration-200 hover:border-cyan-200/60 hover:bg-cyan-300/20 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">
+                    <span>Lihat Detail</span>
+                    <span aria-hidden="true" className="transition-transform duration-200 group-hover/detail:translate-x-1">→</span>
+                  </Link>
 
                 </div>
 
@@ -434,17 +462,10 @@ function Home() {
 
           <a
             href="/event"
-            className="inline-flex items-center rounded-xl border border-white/70 bg-[#192d52] px-6 py-3 text-sm font-medium transition hover:bg-blue-500"
+            className="group inline-flex items-center gap-2 rounded-full border border-cyan-400/40 bg-gradient-to-r from-cyan-400/15 via-blue-500/15 to-indigo-500/15 px-6 py-3 text-sm font-semibold tracking-wide text-white shadow-lg shadow-cyan-950/30 transition-all duration-300 hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-cyan-400/10 hover:shadow-cyan-500/20"
           >
-
-            ▦
-
-            <span className="mx-2">
-              Explore More Events
-            </span>
-
-            →
-
+            <span>Explore More Events</span>
+            <span className="text-base text-cyan-300 transition-transform duration-300 group-hover:translate-x-1">→</span>
           </a>
 
         </div>
@@ -495,26 +516,40 @@ function Home() {
           </div>
 
 
-          {/* VIDEO PLACEHOLDER */}
-
-          <div className="mx-auto mt-8 flex aspect-video max-w-3xl items-center justify-center overflow-hidden rounded-xl bg-[#111d32] shadow-2xl">
-
-            <div className="text-center">
-
-              <div className="mb-3 text-5xl">
-                ▶
-              </div>
-
-              <p className="text-sm text-gray-300">
-                Video Kegiatan
-              </p>
-
-              <p className="mt-1 text-xs text-gray-500">
-                Video dapat ditambahkan nanti
-              </p>
-
-            </div>
-
+          <div className="group/video relative mx-auto mt-8 aspect-video max-w-3xl overflow-hidden rounded-xl bg-[#111d32] shadow-2xl">
+            <video
+              ref={activityVideoRef}
+              className="h-full w-full object-cover"
+              muted={isActivityVideoMuted}
+              playsInline
+              preload="metadata"
+              aria-label="Video kegiatan Duta Anti Narkoba"
+              onClick={toggleActivityVideo}
+              onPlay={() => setIsActivityVideoPlaying(true)}
+              onPause={() => setIsActivityVideoPlaying(false)}
+              onEnded={() => setIsActivityVideoPlaying(false)}
+            >
+              <source src={activityVideo} type="video/mp4" />
+              Browser Anda tidak mendukung pemutaran video.
+            </video>
+            {!isActivityVideoPlaying && (
+              <button
+                type="button"
+                onClick={toggleActivityVideo}
+                aria-label="Play video"
+                className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/60 bg-slate-950/55 text-white shadow-xl backdrop-blur-sm transition duration-200 hover:scale-110 hover:bg-cyan-400 hover:text-slate-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300 sm:h-20 sm:w-20"
+              >
+                <Play className="ml-1 h-8 w-8 fill-current sm:h-9 sm:w-9" />
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={() => setIsActivityVideoMuted((muted) => !muted)}
+              aria-label={isActivityVideoMuted ? "Unmute video" : "Mute video"}
+              className="pointer-events-none absolute bottom-3 right-3 flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-slate-950/60 text-white opacity-0 backdrop-blur-sm transition hover:bg-cyan-400 hover:text-slate-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 group-hover/video:pointer-events-auto group-hover/video:opacity-100 group-focus-within/video:pointer-events-auto group-focus-within/video:opacity-100 [@media(hover:none)]:pointer-events-auto [@media(hover:none)]:opacity-100"
+            >
+              {isActivityVideoMuted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
+            </button>
           </div>
 
         </div>

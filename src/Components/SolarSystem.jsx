@@ -397,7 +397,7 @@ export default function SolarSystem() {
 
         {PLANETS.map((p) =>
           p.image ? (
-            <Suspense key={p.id} fallback={null}>
+            <Suspense key={p.id} fallback={<Planet {...p} />}>
               <LogoPlanet {...p} onSelect={() => setSelected(p)} />
             </Suspense>
           ) : (
