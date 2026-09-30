@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './Components/Navbar';
-import Home from './Pages/Home/Home';
-import Event from './Pages/Event/Event';
-import AboutUs from './Pages/AboutUs/AboutUs';
+
+const Home = lazy(() => import('./Pages/Home/Home'));
+const Event = lazy(() => import('./Pages/Event/Event'));
+const AboutUs = lazy(() => import('./Pages/AboutUs/AboutUs'));
 
 function App() {
   return (
@@ -23,11 +24,13 @@ function PageTransition() {
 
   return (
     <div key={location.pathname} className="page-transition">
-      <Routes location={location}>
-        <Route path="/" element={<Home />} />
-        <Route path="/event" element={<Event />} />
-        <Route path="/about" element={<AboutUs />} />
-      </Routes>
+      <Suspense fallback={<div className="flex min-h-screen items-center justify-center text-slate-200">Memuat halaman...</div>}>
+        <Routes location={location}>
+          <Route path="/" element={<Home />} />
+          <Route path="/event" element={<Event />} />
+          <Route path="/about" element={<AboutUs />} />
+        </Routes>
+      </Suspense>
     </div>
   );
 }

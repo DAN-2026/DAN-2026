@@ -1,5 +1,7 @@
-import { useState } from "react";
-import SolarSystem from "../../Components/SolarSystem";
+import { Suspense, lazy, useEffect, useState } from "react";
+import aboutUsBackground from "../../assets/Background DAN.png";
+
+const SolarSystem = lazy(() => import("../../Components/SolarSystem"));
 
 {/*BUAT FOOTER*/}
 import danImage from "../../assets/logoutama/logo-dan.png";
@@ -36,8 +38,33 @@ function FAQ({Qstn,Answ})
 
 function AboutUs() 
 {
+  useEffect(() => {
+    const bodyStyle = document.body.style;
+    const previousBackground = {
+      image: bodyStyle.backgroundImage,
+      size: bodyStyle.backgroundSize,
+      position: bodyStyle.backgroundPosition,
+      attachment: bodyStyle.backgroundAttachment,
+      repeat: bodyStyle.backgroundRepeat,
+    };
+
+    bodyStyle.backgroundImage = `linear-gradient(rgba(8, 19, 38, 0.35), rgba(8, 19, 38, 0.35)), url("${aboutUsBackground}")`;
+    bodyStyle.backgroundSize = "cover";
+    bodyStyle.backgroundPosition = "center";
+    bodyStyle.backgroundAttachment = "fixed";
+    bodyStyle.backgroundRepeat = "no-repeat";
+
+    return () => {
+      bodyStyle.backgroundImage = previousBackground.image;
+      bodyStyle.backgroundSize = previousBackground.size;
+      bodyStyle.backgroundPosition = previousBackground.position;
+      bodyStyle.backgroundAttachment = previousBackground.attachment;
+      bodyStyle.backgroundRepeat = previousBackground.repeat;
+    };
+  }, []);
+
   return (
-    <main className="pt-8 min-h-screen overflow-hidden ">
+    <main className="pt-8 min-h-screen overflow-hidden">
       <div className="mx-auto max-w-7xl px-6 pb-20 pt-16 lg:px-12">
         
         <div className="grid items-center gap-12 lg:grid-cols-2">
@@ -178,7 +205,9 @@ function AboutUs()
             'radial-gradient(ellipse closest-side at center, black 60%, transparent 100%)',
            }}
         >
-        <SolarSystem />
+        <Suspense fallback={<div className="flex h-[500px] w-full items-center justify-center rounded-2xl border border-white/10 bg-slate-900/40 text-sm text-slate-300 md:h-[650px]">Memuat divisi kami...</div>}>
+          <SolarSystem />
+        </Suspense>
     </div>
       </section>
 
