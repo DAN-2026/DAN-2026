@@ -38,7 +38,7 @@ const events = [
     title: "Anti-Drugs Week",
     titleHighlight: "2026",
     description:
-      "Rangkaian kegiatan kampanye anti narkoba selama satu minggu penuh, diisi dengan seminar, lomba, dan aksi sosial di lingkungan kampus.",
+      "Pekan kampanye anti narkoba yang diisi dengan seminar edukatif, lomba kreatif, dan aksi sosial di lingkungan kampus. Mengajak seluruh civitas akademika UMN untuk bersama-sama menyuarakan gerakan bebas dari penyalahgunaan narkoba.",
     date: "15 Mar 2026",
     location: "Universitas Multimedia Nusantara",
     participants: "200+ Peserta",
@@ -50,7 +50,7 @@ const events = [
     title: "Duta Anti Narkoba",
     titleHighlight: "Goes To School (DGTS)",
     description:
-      "Program edukatif berfokus pada penyuluhan di sekolah. Interaktif dan engaging, mengajak pelajar memahami bahaya narkoba melalui campaign kreatif.",
+      "Program penyuluhan langsung ke sekolah-sekolah dengan pendekatan interaktif dan menyenangkan. Mengajak pelajar mengenali bahaya narkoba sejak dini lewat diskusi, games edukatif, dan campaign kreatif bareng kakak-kakak Duta Anti Narkoba.",
     date: "10 Jul 2026",
     location: "SMA Negeri 1 Tangerang",
     participants: "150+ Peserta",
@@ -62,7 +62,7 @@ const events = [
     title: "Awarding Night",
     titleHighlight: "2026",
     description:
-      "Malam penghargaan untuk merayakan dedikasi, inspirasi, dan dampak generasi muda dalam menciptakan masa depan yang lebih baik.",
+      "Malam puncak sekaligus ajang apresiasi untuk merayakan dedikasi dan kontribusi seluruh pihak yang telah mendukung gerakan anti narkoba sepanjang tahun ini. Menjadi momen refleksi sekaligus semangat baru untuk generasi muda bebas narkoba.",
     date: "25 Okt 2026",
     location: "Universitas Multimedia Nusantara",
     participants: "300+ Peserta",
