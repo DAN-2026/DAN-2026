@@ -90,9 +90,9 @@ function AboutUs()
             penyalahgunaan narkoba melalui pendidikan, kampanye, dan kegiatan 
             positif di sekolah maupun masyarakat."/>
             <FAQ Qstn="Bagaimana cara ikut program?" 
-            Answ="a"/>
+            Answ="Kamu bisa ikut serta di berbagai kegiatan publik Duta Anti Narkoba seperti Anti-Drugs Week, DAN Goes To School, atau Awarding Night — info pendaftaran biasanya dibuka lewat Instagram @dutaantinarkoba.umn. Kalau tertarik jadi bagian resmi tim Duta Anti Narkoba, ada proses seleksi (karantina) yang dibuka tiap periode kepengurusan baru."/>
             <FAQ Qstn="Apakah program ini gratis?" 
-            Answ="a"/>
+            Answ="Ya, seluruh kegiatan dan program edukasi yang diselenggarakan Duta Anti Narkoba UMN terbuka dan gratis untuk diikuti oleh mahasiswa maupun masyarakat umum."/>
           </div>        
         </div>
 
