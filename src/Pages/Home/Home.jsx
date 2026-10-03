@@ -32,6 +32,7 @@ function Home() {
   const [activeGallery, setActiveGallery] = useState(0);
   const [gallery, setGallery] = useState([]);
   const [sponsors, setSponsors] = useState([]);
+  const sponsorCards = sponsors.length === 1 ? Array(8).fill(sponsors[0]) : sponsors;
   const [mediaPartners, setMediaPartners] = useState([]);
   const [isActivityVideoPlaying, setIsActivityVideoPlaying] = useState(false);
   const [isActivityVideoMuted, setIsActivityVideoMuted] = useState(true);
@@ -90,6 +91,7 @@ function Home() {
 
     Promise.all(
       Object.entries(sponsorImageLoaders)
+        .filter(([path]) => !/^sponsor[1-7]\.png$/i.test(path.split("/").pop()))
         .sort(([pathA], [pathB]) => pathA.localeCompare(pathB))
         .map(async ([path, importer]) => ({
           name: path.split('/').pop().replace(/\.[^/.]+$/, ''),
@@ -231,7 +233,7 @@ function Home() {
 
       <section id="about-duta" className="mx-auto max-w-7xl scroll-mt-20 px-6 pb-16 lg:px-12">
 
-        <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 px-6 py-10 shadow-xl backdrop-blur-xl md:px-12">
+        <div className="relative overflow-hidden rounded-2xl border border-white/15 bg-slate-950/60 px-6 py-10 shadow-xl backdrop-blur-xl md:px-12">
 
           {/* liquid glow layer khusus card ini */}
           <div className="pointer-events-none absolute -left-20 -top-20 h-72 w-72 rounded-full bg-cyan-400/10 blur-3xl" />
@@ -249,22 +251,17 @@ function Home() {
               ⓘ &nbsp; Tentang Duta Anti Narkoba
             </p> */}
 
-            <h2 className="text-2xl font-bold md:text-3xl">
-
-              WHAT IS{" "}
-
+            <h2 className="text-2xl font-bold leading-tight md:text-3xl">
+              Apa itu{" "}
               <span className="text-cyan-400">
-                DUTA ANTI NARKOBA?
+                Duta Anti Narkoba?
               </span>
-
             </h2>
 
-            <p className="mt-3 max-w-xl text-sm leading-7 text-gray-200 md:text-base">
-
+            <p className="mt-3 max-w-[56ch] text-[15px] leading-7 text-slate-100 md:text-base">
               Duta Anti Narkoba (DAN) merupakan LSO yang
               berkomitmen menyuarakan gerakan anti narkoba
               melalui edukasi dan kegiatan sosial.
-
             </p>
 
           </div>
@@ -274,14 +271,14 @@ function Home() {
 
           <div className="mt-8">
 
-            <h2 className="text-2xl font-bold md:text-3xl">
-              WHAT IS{" "}
+            <h2 className="text-2xl font-bold leading-tight md:text-3xl">
+              Apa peran{" "}
               <span className="text-cyan-400">
-                THE ROLE OF DUTA ANTI NARKOBA?
+                Duta Anti Narkoba?
               </span>
             </h2>
 
-            <p className="mt-3 text-sm leading-7 text-gray-200 md:text-base">
+            <p className="mt-3 max-w-[62ch] text-[15px] leading-7 text-slate-100 md:text-base">
               Duta Anti Narkoba berperan sebagai pelopor dan penggerak dalam
               mencegah penyalahgunaan narkoba. Melalui edukasi, kampanye, dan
               aksi nyata, Duta Anti Narkoba mengajak generasi muda untuk berani
@@ -398,12 +395,12 @@ function Home() {
 
             <div
               key={index}
-              className="group relative h-56 overflow-hidden rounded-xl bg-gradient-to-br from-blue-700 via-blue-800 to-[#17233f] shadow-xl"
+              className="group relative h-56 overflow-hidden rounded-xl bg-slate-900 shadow-xl"
             >
 
               {/* IMAGE PLACEHOLDER */}
 
-              <div className="absolute inset-0 flex items-center justify-center text-5xl opacity-20">
+              <div className="absolute inset-0 flex items-center justify-center text-5xl">
                 <img
                   src={event.image}
                   alt={event.title}
@@ -440,7 +437,7 @@ function Home() {
                     {event.description}
                   </p>
 
-                  <Link to="/event" state={{ eventCategory: event.category }} className="group/detail mt-3 inline-flex items-center gap-2 rounded-full border border-cyan-200/30 bg-cyan-300/10 px-4 py-2 text-xs font-semibold text-cyan-50 backdrop-blur-sm transition duration-200 hover:border-cyan-200/60 hover:bg-cyan-300/20 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">
+                  <Link to="/event#filter-events" state={{ eventCategory: event.category }} className="group/detail mt-3 inline-flex items-center gap-2 rounded-full border border-cyan-200/30 bg-cyan-300/10 px-4 py-2 text-xs font-semibold text-cyan-50 backdrop-blur-sm transition duration-200 hover:border-cyan-200/60 hover:bg-cyan-300/20 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">
                     <span>Lihat Detail</span>
                     <span aria-hidden="true" className="transition-transform duration-200 group-hover/detail:translate-x-1">→</span>
                   </Link>
@@ -583,15 +580,15 @@ function Home() {
 
           <div className="sponsor-marquee mt-8" aria-label="Daftar sponsor">
             <div className="sponsor-marquee-track">
-              {[...sponsors, ...sponsors].map((sponsor, index) => (
+              {[...sponsorCards, ...sponsorCards].map((sponsor, index) => (
                 <div
                   key={`${sponsor.name}-${index}`}
-                  className="sponsor-marquee-card flex h-28 items-center justify-center rounded-lg bg-white p-3 transition duration-300 hover:scale-[1.02] md:h-32"
+                  className="sponsor-marquee-card flex h-28 items-center justify-center rounded-lg bg-gradient-to-b from-[#ef3f35] via-[#f04f27] to-[#f6a31b] p-3 transition duration-300 hover:scale-[1.02] md:h-32"
                 >
                   <img
                     src={sponsor.image}
-                    alt={index >= sponsors.length ? "" : sponsor.name}
-                    aria-hidden={index >= sponsors.length}
+                    alt={index === 0 ? sponsor.name : ""}
+                    aria-hidden={index !== 0}
                     className="max-h-full max-w-full object-contain"
                     loading="lazy"
                     decoding="async"

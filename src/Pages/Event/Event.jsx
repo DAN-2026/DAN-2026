@@ -6,11 +6,6 @@ import aboutUsBackground from "../../assets/Background DAN.png";
 import danImage from "../../assets/logoutama/logo-dan.png";
 import danNoTeksImage from "../../assets/logoutama/logo-noteks.png";
 import umnImage from "../../assets/logoutama/logo-umn.png";
-import galleryImage1 from "../../assets/gallery/gallery1.jpg";
-import galleryImage2 from "../../assets/gallery/gallery2.jpg";
-import galleryImage3 from "../../assets/gallery/gallery3.jpg";
-import galleryImage4 from "../../assets/gallery/gallery4.jpg";
-import galleryImage5 from "../../assets/gallery/gallery5.jpg";
 // import bemImage from "../../assets/logoutama/logo-bem.png"; // TODO: aktifkan kalau asetnya udah ada
 
 // Tanggal Awarding Night 2026 — ganti kalau tanggal pastinya beda
@@ -41,7 +36,7 @@ const events = [
       "Pekan kampanye anti narkoba yang diisi dengan seminar edukatif, lomba kreatif, dan aksi sosial di lingkungan kampus. Mengajak seluruh civitas akademika UMN untuk bersama-sama menyuarakan gerakan bebas dari penyalahgunaan narkoba.",
     date: "15 Mar 2026",
     location: "Universitas Multimedia Nusantara",
-    participants: "200+ Peserta",
+    participants: "25 Peserta",
     photoCount: adwGalleryPhotoCount,
   },
   {
@@ -54,7 +49,7 @@ const events = [
     date: "10 Jul 2026",
     location: "SMA Negeri 1 Tangerang",
     participants: "150+ Peserta",
-    photoCount: 41,
+    photoCount: 0,
   },
   {
     id: 3,
@@ -66,12 +61,11 @@ const events = [
     date: "25 Okt 2026",
     location: "Universitas Multimedia Nusantara",
     participants: "300+ Peserta",
-    photoCount: 41,
+    photoCount: 0,
   },
 ];
 
 const FILTERS = ["All", "ADW", "DGTS", "Awarding"];
-const galleryPhotos = [galleryImage1, galleryImage2, galleryImage3, galleryImage4, galleryImage5];
 
 // --- Icon kecil (inline SVG, konsisten sama gaya Navbar.jsx) ---
 function IconCalendar() {
@@ -171,7 +165,7 @@ function AlbumOverlay({ album, onClose }) {
     };
   }, [album.category]);
 
-  const photos = album.category === "ADW" ? adwGalleryPhotos : galleryPhotos;
+  const photos = album.category === "ADW" ? adwGalleryPhotos : [];
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
@@ -220,27 +214,33 @@ function AlbumOverlay({ album, onClose }) {
           </header>
 
           <div className="max-h-[min(65vh,560px)] overflow-y-auto p-3 sm:p-4">
-            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3 md:grid-cols-4">
-              {photos.map((photo, index) => (
-                <button
-                  key={photo}
-                  type="button"
-                  onClick={() => setActivePhoto(photo)}
-                  aria-label={`Perbesar foto ${index + 1}`}
-                  className="group aspect-square overflow-hidden rounded-lg bg-slate-700 outline-none ring-cyan-400 transition focus-visible:ring-2"
-                >
-                  <img
-                    src={photo}
-                    alt={`${album.title}, foto ${index + 1}`}
-                    className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </button>
-              ))}
-            </div>
+            {photos.length > 0 ? (
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3 md:grid-cols-4">
+                {photos.map((photo, index) => (
+                  <button
+                    key={photo}
+                    type="button"
+                    onClick={() => setActivePhoto(photo)}
+                    aria-label={`Perbesar foto ${index + 1}`}
+                    className="group aspect-square overflow-hidden rounded-lg bg-slate-700 outline-none ring-cyan-400 transition focus-visible:ring-2"
+                  >
+                    <img
+                      src={photo}
+                      alt={`${album.title}, foto ${index + 1}`}
+                      className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <p className="py-12 text-center text-sm text-slate-400">Album belum tersedia.</p>
+            )}
           </div>
-          <p className="px-4 pb-3 text-center text-xs text-slate-400">Klik foto untuk memperbesar</p>
+          {photos.length > 0 && (
+            <p className="px-4 pb-3 text-center text-xs text-slate-400">Klik foto untuk memperbesar</p>
+          )}
         </section>
       </div>
 
@@ -279,6 +279,8 @@ function Event() {
   const [adwGalleryPhotos, setAdwGalleryPhotos] = useState([]);
   const [adwHeroImage, setAdwHeroImage] = useState(null);
   const { days, hours, minutes, seconds } = useCountdown(TARGET_DATE);
+  const filteredEvents =
+    activeFilter === "All" ? events : events.filter((event) => event.category === activeFilter);
 
   useEffect(() => {
     const requestedCategory = location.state?.eventCategory;
@@ -287,19 +289,29 @@ function Event() {
     const requestedIndex = events.findIndex((event) => event.category === requestedCategory);
     if (requestedIndex === -1) return;
 
-    setSlide(requestedIndex);
-    setSelectedAlbum(events[requestedIndex]);
+    setActiveFilter(requestedCategory);
+    setSlide(0);
   }, [location.state]);
 
   useEffect(() => {
-    if (isCarouselPaused || selectedAlbum) return;
+    if (location.hash !== "#filter-events") return;
+
+    const scrollTimeout = window.setTimeout(() => {
+      document.getElementById("filter-events")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 0);
+
+    return () => window.clearTimeout(scrollTimeout);
+  }, [location.hash]);
+
+  useEffect(() => {
+    if (isCarouselPaused || selectedAlbum || filteredEvents.length < 2) return;
 
     const carouselTimer = window.setInterval(() => {
-      setSlide((currentSlide) => (currentSlide + 1) % events.length);
+      setSlide((currentSlide) => (currentSlide + 1) % filteredEvents.length);
     }, 5500);
 
     return () => window.clearInterval(carouselTimer);
-  }, [isCarouselPaused, selectedAlbum, slide]);
+  }, [isCarouselPaused, selectedAlbum, filteredEvents.length]);
 
   useEffect(() => {
     const bodyStyle = document.body.style;
@@ -349,12 +361,11 @@ function Event() {
     };
   }, []);
 
-  const filteredGallery =
-    activeFilter === "All" ? events : events.filter((e) => e.category === activeFilter);
-
-  const goPrev = () => setSlide((s) => (s === 0 ? events.length - 1 : s - 1));
-  const goNext = () => setSlide((s) => (s === events.length - 1 ? 0 : s + 1));
-  const current = events[slide];
+  const goPrev = () =>
+    setSlide((currentSlide) => (currentSlide === 0 ? filteredEvents.length - 1 : currentSlide - 1));
+  const goNext = () =>
+    setSlide((currentSlide) => (currentSlide === filteredEvents.length - 1 ? 0 : currentSlide + 1));
+  const current = filteredEvents[slide] ?? events[0];
 
   return (
     <main className="min-h-screen overflow-hidden pt-32">
@@ -396,13 +407,16 @@ function Event() {
       </section>
 
       {/* FILTER */}
-      <section className="mx-auto max-w-7xl px-6 lg:px-12">
+      <section id="filter-events" className="mx-auto max-w-7xl scroll-mt-24 px-6 lg:px-12">
         <h2 className="text-center text-2xl font-bold text-white md:text-3xl">Filter Events</h2>
         <div className="mt-5 flex flex-wrap justify-center gap-3">
           {FILTERS.map((f) => (
             <button
               key={f}
-              onClick={() => setActiveFilter(f)}
+              onClick={() => {
+                setActiveFilter(f);
+                setSlide(0);
+              }}
               className={`rounded-full border px-5 py-2 text-sm font-medium transition-colors ${
                 activeFilter === f
                   ? "border-blue-500 bg-blue-600 text-white"
@@ -498,7 +512,7 @@ function Event() {
         </div>
 
         <div className="mt-5 flex justify-center gap-2">
-          {events.map((_, i) => (
+          {filteredEvents.map((_, i) => (
             <button
               key={i}
               onClick={() => setSlide(i)}
@@ -521,7 +535,7 @@ function Event() {
         </p>
 
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredGallery.map((e) => (
+          {filteredEvents.map((e) => (
             <button
               key={e.id}
               onClick={() => setSelectedAlbum(e)}
@@ -554,10 +568,6 @@ function Event() {
             </button>
           ))}
 
-          <button className="flex h-full min-h-[176px] flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-white/30 text-white/80 transition hover:bg-white/5">
-            <span className="text-2xl">+</span>
-            <span className="text-sm">Lihat semua album</span>
-          </button>
         </div>
       </section>
 
