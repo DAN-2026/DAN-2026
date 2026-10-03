@@ -97,16 +97,15 @@ function AboutUs()
         </div>
 
         <div className="pt-12 grid items-center gap-12 lg:grid-cols-2">
-          <div className="flex h-[280px] items-center justify-center overflow-hidden 
-          rounded-2xl bg-slate-500 shadow-2xl md:h-[360px] mt-8">
-            <div className="text-center">
-              <p className="text-sm text-gray-300">
-                Idk
-              </p>
-              <p className="mt-1 text-xs text-gray-400">
-                Masukkan gambar nanti maybe?
-              </p>
-            </div>
+          <div className="mt-8 flex h-[320px] items-center justify-center overflow-hidden md:h-[420px]">
+            <img
+              src={danImage}
+              alt="Logo Duta Anti Narkoba UMN"
+              className="h-full w-full scale-110 object-contain"
+              style={{
+                filter: "contrast(1.1) saturate(1.1) drop-shadow(0 6px 0 rgba(0, 84, 110, 0.8)) drop-shadow(0 12px 0 rgba(0, 42, 68, 0.7)) drop-shadow(0 20px 12px rgba(0, 0, 0, 0.35))",
+              }}
+            />
           </div>
           <div>
             <h1 className="text-white text-5xl font-extrabold leading-tight md:text-5xl">
