@@ -122,16 +122,16 @@ function Home() {
   const events = [
     {
       category: "ADW",
-      date: "27 JUNI 2026",
+      date: "18-29 MEI 2026",
       title: "UMN ADW 2026",
       description:
-        "Program aksi kepedulian sosial bagi anak-anak pejuang kanker di YKAKI.",
+        "Kegiatan penggalangan donasi untuk Rumah Singgah Batu Karang YKAI sebagai bentuk kepedulian sosial kampus.",
       name: "UMN ADW 2026",
       image: gallery[1]?.image || '',
     },
     {
       category: "DGTS",
-      date: "15 OKTOBER 2026",
+      date: "14 NOVEMBER 2026",
       title: "DGTS 2026",
       description:
         "Program edukasi yang berfokus pada pencegahan penyalahgunaan narkoba di kalangan pelajar dan mahasiswa.",
