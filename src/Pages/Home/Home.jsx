@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Play, Volume2, VolumeX } from "lucide-react";
+import Reveal from "../../components/Reveal";
 
 import aboutUsBackground from "../../assets/Background DAN.png";
 import danImage from "../../assets/logoutama/logo-dan.png";
@@ -232,6 +233,7 @@ function Home() {
       ====================================================== */}
 
       <section id="about-duta" className="mx-auto max-w-7xl scroll-mt-20 px-6 pb-16 lg:px-12">
+        <Reveal>
 
         <div className="relative overflow-hidden rounded-2xl border border-white/15 bg-slate-950/60 px-6 py-10 shadow-xl backdrop-blur-xl md:px-12">
 
@@ -349,6 +351,7 @@ function Home() {
 
         </div>
 
+        </Reveal>
       </section>
 
 
@@ -358,6 +361,7 @@ function Home() {
       ====================================================== */}
 
       <section className="mx-auto max-w-7xl px-6 pb-16 lg:px-12">
+        <Reveal>
 
         {/* TITLE */}
 
@@ -393,10 +397,8 @@ function Home() {
 
           {events.map((event, index) => (
 
-            <div
-              key={index}
-              className="group relative h-56 overflow-hidden rounded-xl bg-slate-900 shadow-xl"
-            >
+            <Reveal key={index} delay={index * 100} className="h-full">
+              <div className="group relative h-56 overflow-hidden rounded-xl bg-slate-900 shadow-xl">
 
               {/* IMAGE PLACEHOLDER */}
 
@@ -446,7 +448,8 @@ function Home() {
 
               </div>
 
-            </div>
+              </div>
+            </Reveal>
 
           ))}
 
@@ -467,6 +470,7 @@ function Home() {
 
         </div>
 
+        </Reveal>
       </section>
 
 
@@ -476,6 +480,7 @@ function Home() {
       ====================================================== */}
 
       <section className="mx-auto max-w-7xl px-6 pb-16 lg:px-12">
+        <Reveal>
 
         <div className="rounded-2xl border border-white/10 bg-white/5 px-6 py-10 shadow-xl backdrop-blur-xl md:px-12">
 
@@ -551,6 +556,7 @@ function Home() {
 
         </div>
 
+        </Reveal>
       </section>
 
 
@@ -560,6 +566,7 @@ function Home() {
       ====================================================== */}
 
       <section className="mx-auto max-w-7xl space-y-5 px-6 pb-16 lg:px-12">
+        <Reveal>
 
 
         {/* SPONSORS */}
@@ -581,19 +588,22 @@ function Home() {
           <div className="sponsor-marquee mt-8" aria-label="Daftar sponsor">
             <div className="sponsor-marquee-track">
               {[...sponsorCards, ...sponsorCards].map((sponsor, index) => (
-                <div
+                <Reveal
                   key={`${sponsor.name}-${index}`}
-                  className="sponsor-marquee-card flex h-28 items-center justify-center rounded-lg bg-gradient-to-b from-[#ef3f35] via-[#f04f27] to-[#f6a31b] p-3 transition duration-300 hover:scale-[1.02] md:h-32"
+                  delay={(index % Math.max(sponsorCards.length, 1)) * 100}
+                  className="h-full"
                 >
-                  <img
-                    src={sponsor.image}
-                    alt={index === 0 ? sponsor.name : ""}
-                    aria-hidden={index !== 0}
-                    className="max-h-full max-w-full object-contain"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
+                  <div className="sponsor-marquee-card flex h-28 items-center justify-center rounded-lg bg-gradient-to-b from-[#ef3f35] via-[#f04f27] to-[#f6a31b] p-3 transition duration-300 hover:scale-[1.02] md:h-32">
+                    <img
+                      src={sponsor.image}
+                      alt={index === 0 ? sponsor.name : ""}
+                      aria-hidden={index !== 0}
+                      className="max-h-full max-w-full object-contain"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -621,25 +631,29 @@ function Home() {
           <div className="sponsor-marquee mt-8" aria-label="Daftar media partner">
             <div className="sponsor-marquee-track">
               {[...mediaPartners, ...mediaPartners].map((partner, index) => (
-                <div
+                <Reveal
                   key={`${partner.name}-${index}`}
-                  className="sponsor-marquee-card flex h-28 items-center justify-center rounded-lg bg-white p-3 transition duration-300 hover:scale-[1.02] md:h-32"
+                  delay={(index % Math.max(mediaPartners.length, 1)) * 100}
+                  className="h-full"
                 >
-                  <img
-                    src={partner.image}
-                    alt={index >= mediaPartners.length ? "" : partner.name}
-                    aria-hidden={index >= mediaPartners.length}
-                    className="max-h-full max-w-full object-contain"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
+                  <div className="sponsor-marquee-card flex h-28 items-center justify-center rounded-lg bg-white p-3 transition duration-300 hover:scale-[1.02] md:h-32">
+                    <img
+                      src={partner.image}
+                      alt={index >= mediaPartners.length ? "" : partner.name}
+                      aria-hidden={index >= mediaPartners.length}
+                      className="max-h-full max-w-full object-contain"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                </Reveal>
               ))}
             </div>
           </div>
 
         </div>
 
+        </Reveal>
       </section>
 
 
@@ -649,6 +663,7 @@ function Home() {
       ====================================================== */}
 
       <footer className="bg-[#19263d]">
+        <Reveal>
 
         <div className="mx-auto max-w-7xl px-6 py-12 lg:px-12">
 
@@ -800,6 +815,7 @@ function Home() {
 
         </div>
 
+        </Reveal>
       </footer>
 
     </main>

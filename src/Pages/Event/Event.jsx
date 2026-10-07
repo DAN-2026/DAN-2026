@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { useLocation } from "react-router-dom";
 import { CalendarDays, Images, X } from "lucide-react";
+import Reveal from "../../components/Reveal";
 import aboutUsBackground from "../../assets/Background DAN.png";
 import danImage from "../../assets/logoutama/logo-dan.png";
 import danNoTeksImage from "../../assets/logoutama/logo-noteks.png";
@@ -408,6 +409,7 @@ function Event() {
 
       {/* FILTER */}
       <section id="filter-events" className="mx-auto max-w-7xl scroll-mt-24 px-6 lg:px-12">
+        <Reveal>
         <h2 className="text-center text-2xl font-bold text-white md:text-3xl">Filter Events</h2>
         <div className="mt-5 flex flex-wrap justify-center gap-3">
           {FILTERS.map((f) => (
@@ -427,10 +429,12 @@ function Event() {
             </button>
           ))}
         </div>
+        </Reveal>
       </section>
 
       {/* CAROUSEL */}
       <section className="mx-auto mt-10 max-w-7xl px-6 lg:px-12">
+        <Reveal>
         <div
           className="relative overflow-hidden rounded-3xl"
           onMouseEnter={() => setIsCarouselPaused(true)}
@@ -523,10 +527,12 @@ function Event() {
             />
           ))}
         </div>
+        </Reveal>
       </section>
 
       {/* GALERI KEGIATAN */}
       <section className="mx-auto max-w-7xl px-6 pb-20 pt-16 lg:px-12">
+        <Reveal>
         <h2 className="flex items-center gap-2 text-2xl font-bold text-white">
           <IconImage className="h-7 w-7 text-cyan-400" /> Galeri Kegiatan
         </h2>
@@ -535,12 +541,12 @@ function Event() {
         </p>
 
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredEvents.map((e) => (
-            <button
-              key={e.id}
-              onClick={() => setSelectedAlbum(e)}
-              className="group overflow-hidden rounded-2xl border border-white/10 bg-slate-900/40 text-left"
-            >
+          {filteredEvents.map((e, index) => (
+            <Reveal key={e.id} delay={index * 100} className="h-full">
+              <button
+                onClick={() => setSelectedAlbum(e)}
+                className="group h-full w-full overflow-hidden rounded-2xl border border-white/10 bg-slate-900/40 text-left"
+              >
               {/* TODO: ganti dengan foto asli album */}
               <div className={`relative h-40 overflow-hidden bg-gradient-to-br ${CATEGORY_STYLES[e.category]}`}>
                 {e.category === "ADW" && adwGalleryPhotos[0] && (
@@ -565,14 +571,17 @@ function Event() {
                   <IconImage /> {e.photoCount}
                 </span>
               </div>
-            </button>
+              </button>
+            </Reveal>
           ))}
 
         </div>
+        </Reveal>
       </section>
 
       {/* FOOTER — sama polanya kayak di AboutUs.jsx, ditambah logo BEM */}
       <footer className="bg-[#19263d]">
+        <Reveal>
         <div className="mx-auto max-w-7xl px-6 py-12 lg:px-12">
           <div className="grid items-center gap-10 md:grid-cols-3">
             <div className="flex justify-center md:justify-start">
@@ -633,6 +642,7 @@ function Event() {
             © 2026 DUTA ANTI NARKOBA UMN – All Rights Reserved
           </div>
         </div>
+        </Reveal>
       </footer>
       {selectedAlbum && <AlbumOverlay album={selectedAlbum} onClose={() => setSelectedAlbum(null)} />}
     </main>

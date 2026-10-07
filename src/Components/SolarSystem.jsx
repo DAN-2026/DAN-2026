@@ -15,6 +15,7 @@ import perlengkapanLogo from '../assets/divisi/div_perlengkapan.png'
 import publicRelationLogo from '../assets/divisi/div_publicRelation.png'
 import registrasiLogo from '../assets/divisi/div_registrasi.png'
 import websiteLogo from '../assets/divisi/div_website.png'
+import keamananLogo from '../assets/divisi/div_keamanan.png'
 import { Users } from 'lucide-react'
 
 const divisionPhotoLoaders = {
@@ -27,6 +28,7 @@ const divisionPhotoLoaders = {
   publicRelation: () => import('../assets/divisi img/PublicRelation.JPG'),
   registrasi: () => import('../assets/divisi img/Registrasi.JPG'),
   website: () => import('../assets/divisi img/Website.JPG'),
+  keamanan: () => import('../assets/divisi img/Keamanan.JPG'),
   bph: () => import('../assets/divisi img/BPH.JPG'),
 }
 
@@ -98,15 +100,22 @@ const PLANETS = [
     id: 10,
     name: 'Registrasi',
     desc: 'Divisi Registrasi mengatur proses pendaftaran dan membantu kelancaran administrasi peserta kegiatan.',
-    radius: 10, speed: 0.1, size: 0.65, color: '#4ade80', startAngle: (Math.PI * 2) / 3,
+    radius: 10, speed: 0.1, size: 0.65, color: '#4ade80', startAngle: Math.PI / 2,
     image: registrasiLogo, photoLoader: divisionPhotoLoaders.registrasi,
   },
   {
     id: 11,
     name: 'Website',
     desc: 'Divisi Website mengelola dan mengembangkan situs sebagai pusat informasi digital Duta Anti Narkoba UMN.',
-    radius: 10, speed: 0.1, size: 0.65, color: '#38bdf8', startAngle: (Math.PI * 4) / 3,
+    radius: 10, speed: 0.1, size: 0.65, color: '#38bdf8', startAngle: Math.PI,
     image: websiteLogo, photoLoader: divisionPhotoLoaders.website,
+  },
+  {
+    id: 12,
+    name: 'Keamanan',
+    desc: 'Divisi Keamanan menjaga ketertiban dan membantu memastikan kegiatan berlangsung dengan aman.',
+    radius: 10, speed: 0.1, size: 0.65, color: '#e879f9', startAngle: (Math.PI * 3) / 2,
+    image: keamananLogo, photoLoader: divisionPhotoLoaders.keamanan,
   },
 ]
 
