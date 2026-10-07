@@ -1,5 +1,7 @@
 import { Suspense, lazy, useEffect, useState } from "react";
 import aboutUsBackground from "../../assets/Background DAN.png";
+import aboutUsLogo from "../../assets/logoutama/Duta Anti Narkoba UMN Logo.png";
+import Reveal from "../../components/Reveal";
 
 const SolarSystem = lazy(() => import("../../Components/SolarSystem"));
 
@@ -96,12 +98,13 @@ function AboutUs()
           </div>        
         </div>
 
+        <Reveal>
         <div className="pt-12 grid items-center gap-12 lg:grid-cols-2">
           <div className="mt-8 flex h-[320px] items-center justify-center overflow-hidden md:h-[420px]">
             <img
-              src={danImage}
+              src={aboutUsLogo}
               alt="Logo Duta Anti Narkoba UMN"
-              className="h-full w-full scale-110 object-contain"
+              className="h-[90%] w-[90%] object-contain"
               style={{
                 filter: "contrast(1.1) saturate(1.1) drop-shadow(0 6px 0 rgba(0, 84, 110, 0.8)) drop-shadow(0 12px 0 rgba(0, 42, 68, 0.7)) drop-shadow(0 20px 12px rgba(0, 0, 0, 0.35))",
               }}
@@ -141,7 +144,8 @@ function AboutUs()
         </div>
 
         <div className="grid gap-6 pb-10 pt-8 lg:grid-cols-3">
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-xl backdrop-blur-xl md:p-8">
+          <Reveal delay={0} className="h-full">
+          <div className="h-full rounded-2xl border border-white/10 bg-white/5 p-6 shadow-xl backdrop-blur-xl md:p-8">
             <div>
               <p className="text-3xl font-bold leading-tight text-white md:text-4xl">
                 Visi
@@ -151,8 +155,10 @@ function AboutUs()
               </p>
             </div>
           </div>
+          </Reveal>
 
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-xl backdrop-blur-xl md:p-8">
+          <Reveal delay={100} className="h-full">
+          <div className="h-full rounded-2xl border border-white/10 bg-white/5 p-6 shadow-xl backdrop-blur-xl md:p-8">
             <div>
               <p className="text-3xl font-bold leading-tight text-white md:text-4xl">
                 Misi
@@ -173,8 +179,10 @@ function AboutUs()
               </div>
             </div>
           </div>
+          </Reveal>
 
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-xl backdrop-blur-xl md:p-8">
+          <Reveal delay={200} className="h-full">
+          <div className="h-full rounded-2xl border border-white/10 bg-white/5 p-6 shadow-xl backdrop-blur-xl md:p-8">
             <div>
               <p className="text-3xl font-bold leading-tight text-white md:text-4xl">
                 Tagline
@@ -184,11 +192,14 @@ function AboutUs()
               </p>
             </div>
           </div>
+          </Reveal>
         </div>
+        </Reveal>
       </div>
 
        {/* TATA SURYA DIVISI */}
       <section className="mx-auto max-w-7xl px-6 pb-20 lg:px-12">
+        <Reveal>
         <h1 className="text-white text-5xl font-extrabold leading-tight md:text-5xl">
           Divisi <span className="text-cyan-400">Kami</span>
         </h1>
@@ -208,9 +219,11 @@ function AboutUs()
           <SolarSystem />
         </Suspense>
     </div>
+        </Reveal>
       </section>
 
       <footer className="bg-[#19263d]">
+        <Reveal>
         <div className="mx-auto max-w-7xl px-6 py-12 lg:px-12">
           <div className="grid items-center gap-10 md:grid-cols-3">
             <div className="flex justify-center md:justify-start"> {/* LOGO PLACEHOLDER */}
@@ -313,6 +326,7 @@ function AboutUs()
             © 2026 DUTA ANTI NARKOBA UMN – All Rights Reserved
           </div>
         </div>
+        </Reveal>
       </footer>
     </main>
   );
