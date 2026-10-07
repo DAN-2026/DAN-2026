@@ -123,7 +123,7 @@ function AboutUs()
               Semi Otonom) yang menyuarakan gerakan anti narkoba baik 
               secara internal maupun eksternal, sesuai dengan esensi 
               kampus yang menolak segala bentuk penyalahgunaan 
-              narkoba. Tagline “Stay Sharp, Stay Strong, Stay Clean!” ingin 
+              narkoba. Tagline “Together Be Bright Be Brave!” ingin 
               membawakan pesan bahwa penyalahgunaan narkoba kepada 
               semua kalangan.
             </p>
@@ -187,8 +187,12 @@ function AboutUs()
               <p className="text-3xl font-bold leading-tight text-white md:text-4xl">
                 Tagline
               </p>
-              <p className="mt-5 text-2xl font-bold leading-tight text-cyan-400 md:text-3xl">
-                “Stay Sharp, Stay Strong, Stay Clean!”
+              <p className="mt-5 text-2xl font-bold leading-tight md:text-3xl">
+                <span className="text-white">“Together </span>
+                <span className="text-cyan-400">Be </span>
+                <span className="text-white">Bright </span>
+                <span className="text-cyan-400">Be </span>
+                <span className="text-white">Brave!”</span>
               </p>
             </div>
           </div>

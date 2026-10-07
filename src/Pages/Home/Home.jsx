@@ -487,25 +487,15 @@ function Home() {
           <div className="text-center">
 
             <h2 className="text-3xl font-bold md:text-4xl">
-
+              Together Be{" "}
               <span className="text-cyan-400">
-                Stay
+                Bright
               </span>{" "}
-
-              Sharp,{" "}
-
+              Be{" "}
               <span className="text-cyan-400">
-                Stay
-              </span>{" "}
-
-              Strong,{" "}
-
-              <span className="text-cyan-400">
-                Stay
-              </span>{" "}
-
-              Clean.
-
+                Brave
+              </span>
+              .
             </h2>
 
             <p className="mt-3 text-sm text-gray-300">
