@@ -3,33 +3,33 @@ import { createPortal } from 'react-dom'
 import * as THREE from 'three'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Stars, Sparkles, Billboard, Text, useTexture, OrbitControls } from '@react-three/drei'
-import logoUrl from '../assets/logoutama/logo-noteks.png'
-import acaralogo from '../assets/divisi/div_acara.png'
-import loLogo from '../assets/divisi/div_LO.png'
-import brandPartnerLogo from '../assets/divisi/div_brandPartner.png'
-import dekorVisualLogo from '../assets/divisi/div_dekorVisual.png'
-import dokumentasiLogo from '../assets/divisi/div_dokumentasi.png'
-import freshMoneyLogo from '../assets/divisi/div_freshMoney.png'
-import makeupLogo from '../assets/divisi/div_makeup.png'
-import perlengkapanLogo from '../assets/divisi/div_perlengkapan.png'
-import publicRelationLogo from '../assets/divisi/div_publicRelation.png'
-import registrasiLogo from '../assets/divisi/div_registrasi.png'
-import websiteLogo from '../assets/divisi/div_website.png'
-import keamananLogo from '../assets/divisi/div_keamanan.png'
+import logoUrl from '../assets/logoutama/logo-noteks.webp'
+import acaralogo from '../assets/divisi/div_acara.webp'
+import loLogo from '../assets/divisi/div_LO.webp'
+import brandPartnerLogo from '../assets/divisi/div_brandPartner.webp'
+import dekorVisualLogo from '../assets/divisi/div_dekorVisual.webp'
+import dokumentasiLogo from '../assets/divisi/div_dokumentasi.webp'
+import freshMoneyLogo from '../assets/divisi/div_freshMoney.webp'
+import makeupLogo from '../assets/divisi/div_makeup.webp'
+import perlengkapanLogo from '../assets/divisi/div_perlengkapan.webp'
+import publicRelationLogo from '../assets/divisi/div_publicRelation.webp'
+import registrasiLogo from '../assets/divisi/div_registrasi.webp'
+import websiteLogo from '../assets/divisi/div_website.webp'
+import keamananLogo from '../assets/divisi/div_keamanan.webp'
 import { Users } from 'lucide-react'
 
 const divisionPhotoLoaders = {
-  acara: () => import('../assets/divisi img/acara.JPG'),
-  brandPartner: () => import('../assets/divisi img/BrandPartner.JPG'),
-  dekorasi: () => import('../assets/divisi img/Dekorasi.JPG'),
-  dokumentasi: () => import('../assets/divisi img/Dokumentasi.jpeg'),
-  freshMoney: () => import('../assets/divisi img/FreshMoney.JPG'),
-  perlengkapan: () => import('../assets/divisi img/Perlengkapan.JPG'),
-  publicRelation: () => import('../assets/divisi img/PublicRelation.JPG'),
-  registrasi: () => import('../assets/divisi img/Registrasi.JPG'),
-  website: () => import('../assets/divisi img/Website.JPG'),
-  keamanan: () => import('../assets/divisi img/Keamanan.JPG'),
-  bph: () => import('../assets/divisi img/BPH.JPG'),
+  acara: () => import('../assets/divisi img/acara.webp'),
+  brandPartner: () => import('../assets/divisi img/BrandPartner.webp'),
+  dekorasi: () => import('../assets/divisi img/Dekorasi.webp'),
+  dokumentasi: () => import('../assets/divisi img/Dokumentasi.webp'),
+  freshMoney: () => import('../assets/divisi img/FreshMoney.webp'),
+  perlengkapan: () => import('../assets/divisi img/Perlengkapan.webp'),
+  publicRelation: () => import('../assets/divisi img/PublicRelation.webp'),
+  registrasi: () => import('../assets/divisi img/Registrasi.webp'),
+  website: () => import('../assets/divisi img/Website.webp'),
+  keamanan: () => import('../assets/divisi img/Keamanan.webp'),
+  bph: () => import('../assets/divisi img/BPH.webp'),
 }
 
 const PLANETS = [

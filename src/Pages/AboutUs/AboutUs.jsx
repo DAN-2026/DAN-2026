@@ -1,13 +1,13 @@
 import { Suspense, lazy, useEffect, useState } from "react";
-import aboutUsBackground from "../../assets/Background DAN.png";
-import aboutUsLogo from "../../assets/logoutama/Duta Anti Narkoba UMN Logo.png";
+import aboutUsBackground from "../../assets/Background DAN.webp";
+import aboutUsLogo from "../../assets/logoutama/Duta Anti Narkoba UMN Logo.webp";
 import Reveal from "../../components/Reveal";
 
 const SolarSystem = lazy(() => import("../../Components/SolarSystem"));
 
 {/*BUAT FOOTER*/}
-import danImage from "../../assets/logoutama/logo-dan.png";
-import umnImage from "../../assets/logoutama/logo-umn.png";
+import danImage from "../../assets/logoutama/logo-dan.webp";
+import umnImage from "../../assets/logoutama/logo-umn.webp";
 
 
 function FAQ({Qstn,Answ})

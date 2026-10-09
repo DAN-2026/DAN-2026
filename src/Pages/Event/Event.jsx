@@ -3,11 +3,11 @@ import { createPortal } from "react-dom";
 import { useLocation } from "react-router-dom";
 import { CalendarDays, Images, X } from "lucide-react";
 import Reveal from "../../components/Reveal";
-import aboutUsBackground from "../../assets/Background DAN.png";
-import danImage from "../../assets/logoutama/logo-dan.png";
-import danNoTeksImage from "../../assets/logoutama/logo-noteks.png";
-import umnImage from "../../assets/logoutama/logo-umn.png";
-// import bemImage from "../../assets/logoutama/logo-bem.png"; // TODO: aktifkan kalau asetnya udah ada
+import aboutUsBackground from "../../assets/Background DAN.webp";
+import danImage from "../../assets/logoutama/logo-dan.webp";
+import danNoTeksImage from "../../assets/logoutama/logo-noteks.webp";
+import umnImage from "../../assets/logoutama/logo-umn.webp";
+// import bemImage from "../../assets/logoutama/logo-bem.webp"; // TODO: aktifkan kalau asetnya udah ada
 
 // Tanggal Awarding Night 2026 — ganti kalau tanggal pastinya beda
 const TARGET_DATE = new Date("2026-11-25T00:00:00");
@@ -342,7 +342,7 @@ function Event() {
   useEffect(() => {
     let isMounted = true;
 
-    import("../../assets/gallery/ADW/DJI_20260627121848_0077_D.JPG")
+    import("../../assets/gallery/ADW/DJI_20260627121848_0077_D.webp")
       .then((module) => {
         if (!isMounted) return;
         setAdwHeroImage(module.default ?? module);

@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import danImage from "../assets/logoutama/logo-dan.png";
+import danImage from "../assets/logoutama/logo-dan.webp";
 
 function Navbar() {
   const location = useLocation();
