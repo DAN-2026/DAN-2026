@@ -2,19 +2,16 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Play, Volume2, VolumeX } from "lucide-react";
 import Reveal from "../../components/Reveal";
+import LogoMarquee from "../../components/LogoMarquee";
 
 import aboutUsBackground from "../../assets/Background DAN.webp";
 import danImage from "../../assets/logoutama/logo-dan.webp";
 import umnImage from "../../assets/logoutama/logo-umn.webp";
 import mainHomeImage from "../../assets/logoutama/mainHome.webp";
 import activityVideo from "../../assets/gallery/vidio kegiatan/kegiatan.mp4";
+import sponsorImage from "../../assets/sponsor/Spark Studen Ambassador.webp";
 
 const galleryImageLoaders = import.meta.glob("../../assets/gallery/*.webp", {
-  eager: false,
-  import: "default",
-});
-
-const sponsorImageLoaders = import.meta.glob("../../assets/sponsor/*.{png,jpg,jpeg,webp}", {
   eager: false,
   import: "default",
 });
@@ -24,6 +21,8 @@ const mediaPartnerImageLoaders = import.meta.glob("../../assets/mediaPartner/*.{
   import: "default",
 });
 
+const sponsors = [{ name: "Spark Studen Ambassador", image: sponsorImage }];
+
 async function loadImage(importer) {
   const mod = await importer();
   return mod.default ?? mod;
@@ -32,8 +31,6 @@ async function loadImage(importer) {
 function Home() {
   const [activeGallery, setActiveGallery] = useState(0);
   const [gallery, setGallery] = useState([]);
-  const [sponsors, setSponsors] = useState([]);
-  const sponsorCards = sponsors.length === 1 ? Array(8).fill(sponsors[0]) : sponsors;
   const [mediaPartners, setMediaPartners] = useState([]);
   const [isActivityVideoPlaying, setIsActivityVideoPlaying] = useState(false);
   const [isActivityVideoMuted, setIsActivityVideoMuted] = useState(true);
@@ -88,19 +85,6 @@ function Home() {
     ).then((entries) => {
       if (!isMounted) return;
       setGallery(entries);
-    });
-
-    Promise.all(
-      Object.entries(sponsorImageLoaders)
-        .filter(([path]) => !/^sponsor[1-7]\.png$/i.test(path.split("/").pop()))
-        .sort(([pathA], [pathB]) => pathA.localeCompare(pathB))
-        .map(async ([path, importer]) => ({
-          name: path.split('/').pop().replace(/\.[^/.]+$/, ''),
-          image: await loadImage(importer),
-        }))
-    ).then((entries) => {
-      if (!isMounted) return;
-      setSponsors(entries);
     });
 
     Promise.all(
@@ -575,28 +559,11 @@ function Home() {
             mendukung gerakan anti narkoba.
           </p>
 
-          <div className="sponsor-marquee mt-8" aria-label="Daftar sponsor">
-            <div className="sponsor-marquee-track">
-              {[...sponsorCards, ...sponsorCards].map((sponsor, index) => (
-                <Reveal
-                  key={`${sponsor.name}-${index}`}
-                  delay={(index % Math.max(sponsorCards.length, 1)) * 100}
-                  className="h-full"
-                >
-                  <div className="sponsor-marquee-card flex h-28 items-center justify-center rounded-lg bg-gradient-to-b from-[#ef3f35] via-[#f04f27] to-[#f6a31b] p-3 transition duration-300 hover:scale-[1.02] md:h-32">
-                    <img
-                      src={sponsor.image}
-                      alt={index === 0 ? sponsor.name : ""}
-                      aria-hidden={index !== 0}
-                      className="max-h-full max-w-full object-contain"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
+          <LogoMarquee
+            items={sponsors}
+            label="Daftar sponsor"
+            cardClassName="bg-gradient-to-b from-[#ef3f35] via-[#f04f27] to-[#f6a31b]"
+          />
 
         </div>
 
@@ -618,28 +585,11 @@ function Home() {
             edukasi dan informasi positif.
           </p>
 
-          <div className="sponsor-marquee mt-8" aria-label="Daftar media partner">
-            <div className="sponsor-marquee-track">
-              {[...mediaPartners, ...mediaPartners].map((partner, index) => (
-                <Reveal
-                  key={`${partner.name}-${index}`}
-                  delay={(index % Math.max(mediaPartners.length, 1)) * 100}
-                  className="h-full"
-                >
-                  <div className="sponsor-marquee-card flex h-28 items-center justify-center rounded-lg bg-white p-3 transition duration-300 hover:scale-[1.02] md:h-32">
-                    <img
-                      src={partner.image}
-                      alt={index >= mediaPartners.length ? "" : partner.name}
-                      aria-hidden={index >= mediaPartners.length}
-                      className="max-h-full max-w-full object-contain"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
+          <LogoMarquee
+            items={mediaPartners}
+            label="Daftar media partner"
+            cardClassName="bg-white"
+          />
 
         </div>
 
