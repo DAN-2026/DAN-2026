@@ -95,6 +95,8 @@ function AboutUs()
             Answ="Kamu bisa ikut serta di berbagai kegiatan publik Duta Anti Narkoba seperti Anti-Drugs Week, DAN Goes To School, atau Awarding Night — info pendaftaran biasanya dibuka lewat Instagram @dutaantinarkoba.umn. Kalau tertarik jadi bagian resmi tim Duta Anti Narkoba, ada proses seleksi (karantina) yang dibuka tiap periode kepengurusan baru."/>
             <FAQ Qstn="Apakah program ini gratis?" 
             Answ="Ya, seluruh kegiatan dan program edukasi yang diselenggarakan Duta Anti Narkoba UMN terbuka dan gratis untuk diikuti oleh mahasiswa maupun masyarakat umum."/>
+            <FAQ Qstn="Bagaimana cara voting Top 10 Duta Anti Narkoba?"
+            Answ={<span>Vote dapat dilakukan melalui gform berikut ini <a href="https://forms.gle/CUyu9FpXEnTs4svU7" target="_blank" rel="noreferrer" className="text-cyan-400 underline">https://forms.gle/CUyu9FpXEnTs4svU7</a></span>}/>
           </div>        
         </div>
 
