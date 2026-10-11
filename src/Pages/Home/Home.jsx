@@ -387,12 +387,14 @@ function Home() {
               {/* IMAGE PLACEHOLDER */}
 
               <div className="absolute inset-0 flex items-center justify-center text-5xl">
-                <img
-                  src={event.image}
-                  alt={event.title}
-                  loading="lazy"
-                  decoding="async"
-                />
+                {event.image && (
+                  <img
+                    src={event.image}
+                    alt={event.title}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
               </div>
 
 
@@ -444,13 +446,13 @@ function Home() {
 
         <div className="mt-8 text-center">
 
-          <a
-            href="/event"
+          <Link
+            to="/event"
             className="group inline-flex items-center gap-2 rounded-full border border-cyan-400/40 bg-gradient-to-r from-cyan-400/15 via-blue-500/15 to-indigo-500/15 px-6 py-3 text-sm font-semibold tracking-wide text-white shadow-lg shadow-cyan-950/30 transition-all duration-300 hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-cyan-400/10 hover:shadow-cyan-500/20"
           >
             <span>Explore More Events</span>
             <span className="text-base text-cyan-300 transition-transform duration-300 group-hover:translate-x-1">→</span>
-          </a>
+          </Link>
 
         </div>
 
