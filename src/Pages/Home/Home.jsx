@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import { Play, Volume2, VolumeX } from "lucide-react";
 import Reveal from "../../components/Reveal";
 
-import aboutUsBackground from "../../assets/Background DAN.png";
-import danImage from "../../assets/logoutama/logo-dan.png";
-import umnImage from "../../assets/logoutama/logo-umn.png";
-import mainHomeImage from "../../assets/logoutama/mainHome.JPG";
-import activityVideo from "../../assets/gallery/vidio kegiatan/DJI_20260627121917_0079_D.mp4";
+import aboutUsBackground from "../../assets/Background DAN.webp";
+import danImage from "../../assets/logoutama/logo-dan.webp";
+import umnImage from "../../assets/logoutama/logo-umn.webp";
+import mainHomeImage from "../../assets/logoutama/mainHome.webp";
+import activityVideo from "../../assets/gallery/vidio kegiatan/kegiatan.mp4";
 
-const galleryImageLoaders = import.meta.glob("../../assets/gallery/*.jpg", {
+const galleryImageLoaders = import.meta.glob("../../assets/gallery/*.webp", {
   eager: false,
   import: "default",
 });
