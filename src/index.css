@@ -94,6 +94,7 @@ button {
 
 .sponsor-marquee {
   overflow: hidden;
+  contain: layout paint;
   mask-image: linear-gradient(
     to right,
     transparent,
@@ -107,7 +108,8 @@ button {
   display: flex;
   width: max-content;
   gap: 12px;
-  animation: sponsorMarquee 28s linear infinite;
+  animation: sponsorMarquee var(--marquee-duration, 28s) linear infinite;
+  will-change: transform;
 }
 
 .sponsor-marquee-card {
