@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { useLocation } from "react-router-dom";
-import { CalendarDays, Images, X } from "lucide-react";
+import { ArrowRight, CalendarDays, Images, X } from "lucide-react";
 import Reveal from "../../components/Reveal";
 import aboutUsBackground from "../../assets/Background DAN.webp";
 import danImage from "../../assets/logoutama/logo-dan.webp";
@@ -11,6 +11,8 @@ import umnImage from "../../assets/logoutama/logo-umn.webp";
 
 // Tanggal Awarding Night 2026 — ganti kalau tanggal pastinya beda
 const TARGET_DATE = new Date("2026-11-25T00:00:00");
+const TICKET_FORM_URL =
+  import.meta.env.VITE_TICKET_FORM_URL || "https://forms.gle/njrocvGwisJkzLVL7";
 
 const CATEGORY_STYLES = {
   ADW: "from-teal-500 to-cyan-300",
@@ -426,11 +428,10 @@ function Event() {
               aria-selected={activeAwardingTab === "voting"}
               aria-controls="awarding-tab-panel"
               onClick={() => setActiveAwardingTab("voting")}
-              className={`rounded-full border px-5 py-2 text-sm font-medium transition-colors ${
-                activeAwardingTab === "voting"
-                  ? "border-blue-500 bg-blue-600 text-white"
-                  : "border-white/20 text-white/80 hover:bg-white/10"
-              }`}
+              className={`rounded-full border px-5 py-2 text-sm font-medium transition-colors ${activeAwardingTab === "voting"
+                ? "border-blue-500 bg-blue-600 text-white"
+                : "border-white/20 text-white/80 hover:bg-white/10"
+                }`}
             >
               How To Voting
             </button>
@@ -441,11 +442,10 @@ function Event() {
               aria-selected={activeAwardingTab === "ticket"}
               aria-controls="awarding-tab-panel"
               onClick={() => setActiveAwardingTab("ticket")}
-              className={`rounded-full border px-5 py-2 text-sm font-medium transition-colors ${
-                activeAwardingTab === "ticket"
-                  ? "border-blue-500 bg-blue-600 text-white"
-                  : "border-white/20 text-white/80 hover:bg-white/10"
-              }`}
+              className={`rounded-full border px-5 py-2 text-sm font-medium transition-colors ${activeAwardingTab === "ticket"
+                ? "border-blue-500 bg-blue-600 text-white"
+                : "border-white/20 text-white/80 hover:bg-white/10"
+                }`}
             >
               Get Your Ticket
             </button>
@@ -454,13 +454,62 @@ function Event() {
             id="awarding-tab-panel"
             role="tabpanel"
             aria-labelledby={`awarding-tab-${activeAwardingTab}`}
-            className="relative mt-5 min-h-[320px] overflow-hidden rounded-2xl border border-white/15 bg-slate-950/60 px-6 py-10 shadow-xl backdrop-blur-xl md:min-h-[420px] md:px-12"
+            className="relative mt-5 overflow-hidden rounded-2xl border border-white/10 bg-slate-950/70 px-5 py-8 md:px-10 md:py-10"
           >
-            <div className="pointer-events-none absolute -left-20 -top-20 h-72 w-72 rounded-full bg-cyan-400/10 blur-3xl" />
-            <div className="pointer-events-none absolute -bottom-24 -right-16 h-80 w-80 rounded-full bg-blue-500/15 blur-3xl" />
-            <p className="relative z-10 text-white">
-              {activeAwardingTab === "voting" ? "a" : "b"}
-            </p>
+            {activeAwardingTab === "voting" ? (
+              <p className="relative z-10 text-white">Informasi voting akan segera hadir.</p>
+            ) : (
+              <div className="mx-auto max-w-4xl text-white">
+                <div className="text-center">
+                  <h3 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">
+                    Ticket Awarding Night <span className="text-cyan-300">2026</span>
+                  </h3>
+                  <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-blue-100/75 md:text-base">
+                    Saksikan malam apresiasi Awarding Night dan dukung kandidat pilihanmu secara langsung.
+                  </p>
+                </div>
+
+                <div className="mt-7 grid gap-8 rounded-xl border border-white/10 bg-white/[0.03] p-5 sm:p-6 md:grid-cols-2 md:gap-10">
+                  <dl className="space-y-5 text-left">
+                    <div>
+                      <dt className="text-xs font-medium uppercase tracking-wide text-blue-200/60">Tanggal</dt>
+                      <dd className="mt-1.5 text-sm font-semibold leading-5 text-white">Senin, 30 November 2026</dd>
+                    </div>
+                    <div>
+                      <dt className="text-xs font-medium uppercase tracking-wide text-blue-200/60">Waktu</dt>
+                      <dd className="mt-1.5 text-sm font-semibold leading-5 text-white">17.30 WIB</dd>
+                    </div>
+                    <div>
+                      <dt className="text-xs font-medium uppercase tracking-wide text-blue-200/60">Lokasi</dt>
+                      <dd className="mt-1.5 text-sm font-semibold leading-5 text-white">
+                        Gedung D Lecture Theatre, Universitas Multimedia Nusantara
+                      </dd>
+                    </div>
+                  </dl>
+
+                  <div className="border-t border-white/10 pt-5 text-left md:border-l md:border-t-0 md:pl-8 md:pt-0">
+                    <h4 className="text-sm font-semibold text-white">Yang akan kamu dapatkan</h4>
+                    <ul className="mt-3 list-disc space-y-3 pl-5 text-sm leading-6 text-blue-100/75 marker:text-cyan-300">
+                      <li>Dukung kandidat pilihanmu secara langsung.</li>
+                      <li>Nikmati malam apresiasi Awarding Night 2026.</li>
+                      <li>Kesempatan mendapatkan bonus SKKM sesuai syarat dan ketentuan yang berlaku.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="mt-7 text-center">
+                  <a
+                    href={TICKET_FORM_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 rounded-lg bg-cyan-400 px-6 py-3 font-semibold text-slate-950 transition-colors hover:bg-cyan-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-200"
+                  >
+                    Beli Tiket Sekarang
+                    <ArrowRight className="h-5 w-5" aria-hidden="true" />
+                  </a>
+                </div>
+              </div>
+            )}
           </div>
         </Reveal>
       </section>
@@ -468,238 +517,235 @@ function Event() {
       {/* FILTER */}
       <section id="filter-events" className="mx-auto max-w-7xl scroll-mt-24 px-6 lg:px-12">
         <Reveal>
-        <h2 className="text-center text-2xl font-bold text-white md:text-3xl">Filter Album Events</h2>
-        <div className="mt-5 flex flex-wrap justify-center gap-3">
-          {FILTERS.map((f) => (
-            <button
-              key={f}
-              onClick={() => {
-                setActiveFilter(f);
-                setSlide(0);
-              }}
-              className={`rounded-full border px-5 py-2 text-sm font-medium transition-colors ${
-                activeFilter === f
+          <h2 className="text-center text-2xl font-bold text-white md:text-3xl">Filter Album Events</h2>
+          <div className="mt-5 flex flex-wrap justify-center gap-3">
+            {FILTERS.map((f) => (
+              <button
+                key={f}
+                onClick={() => {
+                  setActiveFilter(f);
+                  setSlide(0);
+                }}
+                className={`rounded-full border px-5 py-2 text-sm font-medium transition-colors ${activeFilter === f
                   ? "border-blue-500 bg-blue-600 text-white"
                   : "border-white/20 text-white/80 hover:bg-white/10"
-              }`}
-            >
-              {f}
-            </button>
-          ))}
-        </div>
+                  }`}
+              >
+                {f}
+              </button>
+            ))}
+          </div>
         </Reveal>
       </section>
 
       {/* CAROUSEL */}
       <section className="mx-auto mt-10 max-w-7xl px-6 lg:px-12">
         <Reveal>
-        <div
-          className="relative overflow-hidden rounded-3xl"
-          onMouseEnter={() => setIsCarouselPaused(true)}
-          onMouseLeave={() => setIsCarouselPaused(false)}
-          onFocusCapture={() => setIsCarouselPaused(true)}
-          onBlurCapture={(event) => {
-            if (!event.currentTarget.contains(event.relatedTarget)) {
-              setIsCarouselPaused(false);
-            }
-          }}
-        >
           <div
-            className={`group relative flex min-h-[420px] flex-col justify-end bg-gradient-to-br p-8 md:p-12 ${
-              CATEGORY_STYLES[current.category]
-            }`}
+            className="relative overflow-hidden rounded-3xl"
+            onMouseEnter={() => setIsCarouselPaused(true)}
+            onMouseLeave={() => setIsCarouselPaused(false)}
+            onFocusCapture={() => setIsCarouselPaused(true)}
+            onBlurCapture={(event) => {
+              if (!event.currentTarget.contains(event.relatedTarget)) {
+                setIsCarouselPaused(false);
+              }
+            }}
           >
-            {/* TODO: ganti dengan foto asli event (background image) */}
-            {current.category === "ADW" && (
-              <img
-                src={adwHeroImage}
-                alt=""
-                aria-hidden="true"
-                fetchPriority="high"
-                className="absolute inset-0 h-full w-full object-cover"
-              />
-            )}
-            <div className="absolute inset-0 bg-black/30" />
-
-            <button
-              onClick={goPrev}
-              aria-label="Sebelumnya"
-              className="absolute left-4 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white opacity-0 backdrop-blur-md transition-opacity duration-300 group-hover:opacity-100 hover:bg-white/20"
+            <div
+              className={`group relative flex min-h-[420px] flex-col justify-end bg-gradient-to-br p-8 md:p-12 ${CATEGORY_STYLES[current.category]
+                }`}
             >
-              <IconArrow direction="left" />
-            </button>
-            <button
-              onClick={goNext}
-              aria-label="Selanjutnya"
-              className="absolute right-4 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white opacity-0 backdrop-blur-md transition-opacity duration-300 group-hover:opacity-100 hover:bg-white/20"
-            >
-              <IconArrow direction="right" />
-            </button>
-
-            <div className="relative z-10 max-w-xl">
-              <h3 className="text-3xl font-extrabold leading-tight text-white md:text-4xl">
-                {current.title}
-                {current.titleHighlight && (
-                  <>
-                    {" "}
-                    <span className="text-cyan-300">{current.titleHighlight}</span>
-                  </>
-                )}
-              </h3>
-              <p className="mt-4 text-sm leading-relaxed text-gray-100 md:text-base">
-                {current.description}
-              </p>
+              {/* TODO: ganti dengan foto asli event (background image) */}
+              {current.category === "ADW" && (
+                <img
+                  src={adwHeroImage}
+                  alt=""
+                  aria-hidden="true"
+                  fetchPriority="high"
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+              )}
+              <div className="absolute inset-0 bg-black/30" />
 
               <button
-                onClick={() => setSelectedAlbum(current)}
-                className="mt-6 flex items-center gap-2 rounded-full bg-cyan-400 px-5 py-2.5 text-sm font-semibold text-slate-900 transition hover:bg-cyan-300"
+                onClick={goPrev}
+                aria-label="Sebelumnya"
+                className="absolute left-4 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white opacity-0 backdrop-blur-md transition-opacity duration-300 group-hover:opacity-100 hover:bg-white/20"
               >
-                <IconImage />
-                Lihat Album
+                <IconArrow direction="left" />
+              </button>
+              <button
+                onClick={goNext}
+                aria-label="Selanjutnya"
+                className="absolute right-4 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white opacity-0 backdrop-blur-md transition-opacity duration-300 group-hover:opacity-100 hover:bg-white/20"
+              >
+                <IconArrow direction="right" />
               </button>
 
-              <div className="mt-5 flex flex-wrap gap-5 text-xs text-gray-100 md:text-sm">
-                <span className="flex items-center gap-1.5">
-                  <IconCalendar /> {current.date}
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <IconPin /> {current.location}
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <IconUsers /> {current.participants}
-                </span>
+              <div className="relative z-10 max-w-xl">
+                <h3 className="text-3xl font-extrabold leading-tight text-white md:text-4xl">
+                  {current.title}
+                  {current.titleHighlight && (
+                    <>
+                      {" "}
+                      <span className="text-cyan-300">{current.titleHighlight}</span>
+                    </>
+                  )}
+                </h3>
+                <p className="mt-4 text-sm leading-relaxed text-gray-100 md:text-base">
+                  {current.description}
+                </p>
+
+                <button
+                  onClick={() => setSelectedAlbum(current)}
+                  className="mt-6 flex items-center gap-2 rounded-full bg-cyan-400 px-5 py-2.5 text-sm font-semibold text-slate-900 transition hover:bg-cyan-300"
+                >
+                  <IconImage />
+                  Lihat Album
+                </button>
+
+                <div className="mt-5 flex flex-wrap gap-5 text-xs text-gray-100 md:text-sm">
+                  <span className="flex items-center gap-1.5">
+                    <IconCalendar /> {current.date}
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <IconPin /> {current.location}
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <IconUsers /> {current.participants}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="mt-5 flex justify-center gap-2">
-          {filteredEvents.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setSlide(i)}
-              aria-label={`Ke slide ${i + 1}`}
-              className={`h-2 rounded-full transition-all ${
-                i === slide ? "w-6 bg-cyan-400" : "w-2 bg-white/40"
-              }`}
-            />
-          ))}
-        </div>
+          <div className="mt-5 flex justify-center gap-2">
+            {filteredEvents.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setSlide(i)}
+                aria-label={`Ke slide ${i + 1}`}
+                className={`h-2 rounded-full transition-all ${i === slide ? "w-6 bg-cyan-400" : "w-2 bg-white/40"
+                  }`}
+              />
+            ))}
+          </div>
         </Reveal>
       </section>
 
       {/* GALERI KEGIATAN */}
       <section className="mx-auto max-w-7xl px-6 pb-20 pt-16 lg:px-12">
         <Reveal>
-        <h2 className="flex items-center gap-2 text-2xl font-bold text-white">
-          <IconImage className="h-7 w-7 text-cyan-400" /> Galeri Kegiatan
-        </h2>
-        <p className="mt-2 text-sm text-gray-200">
-          Setiap event punya album tersendiri. Klik untuk melihat semua foto.
-        </p>
+          <h2 className="flex items-center gap-2 text-2xl font-bold text-white">
+            <IconImage className="h-7 w-7 text-cyan-400" /> Galeri Kegiatan
+          </h2>
+          <p className="mt-2 text-sm text-gray-200">
+            Setiap event punya album tersendiri. Klik untuk melihat semua foto.
+          </p>
 
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredEvents.map((e, index) => (
-            <Reveal key={e.id} delay={index * 100} className="h-full">
-              <button
-                onClick={() => setSelectedAlbum(e)}
-                className="group h-full w-full overflow-hidden rounded-2xl border border-white/10 bg-slate-900/40 text-left"
-              >
-              {/* TODO: ganti dengan foto asli album */}
-              <div className={`relative h-40 overflow-hidden bg-gradient-to-br ${CATEGORY_STYLES[e.category]}`}>
-                {e.category === "ADW" && adwGalleryPhotos[0] && (
-                  <img
-                    src={adwGalleryPhotos[0]}
-                    alt=""
-                    className="absolute inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-105"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                )}
-                <span className="absolute right-3 top-3 rounded-full bg-black/40 px-3 py-1 text-xs font-medium text-white">
-                  {e.category}
-                </span>
-              </div>
-              <div className="flex items-center justify-between px-4 py-4">
-                <div>
-                  <p className="font-semibold text-white">{e.title}</p>
-                  <p className="text-xs text-gray-300">{e.date}</p>
-                </div>
-                <span className="flex items-center gap-1 text-xs text-cyan-400">
-                  <IconImage /> {e.photoCount}
-                </span>
-              </div>
-              </button>
-            </Reveal>
-          ))}
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {filteredEvents.map((e, index) => (
+              <Reveal key={e.id} delay={index * 100} className="h-full">
+                <button
+                  onClick={() => setSelectedAlbum(e)}
+                  className="group h-full w-full overflow-hidden rounded-2xl border border-white/10 bg-slate-900/40 text-left"
+                >
+                  {/* TODO: ganti dengan foto asli album */}
+                  <div className={`relative h-40 overflow-hidden bg-gradient-to-br ${CATEGORY_STYLES[e.category]}`}>
+                    {e.category === "ADW" && adwGalleryPhotos[0] && (
+                      <img
+                        src={adwGalleryPhotos[0]}
+                        alt=""
+                        className="absolute inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    )}
+                    <span className="absolute right-3 top-3 rounded-full bg-black/40 px-3 py-1 text-xs font-medium text-white">
+                      {e.category}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between px-4 py-4">
+                    <div>
+                      <p className="font-semibold text-white">{e.title}</p>
+                      <p className="text-xs text-gray-300">{e.date}</p>
+                    </div>
+                    <span className="flex items-center gap-1 text-xs text-cyan-400">
+                      <IconImage /> {e.photoCount}
+                    </span>
+                  </div>
+                </button>
+              </Reveal>
+            ))}
 
-        </div>
+          </div>
         </Reveal>
       </section>
 
       {/* FOOTER — sama polanya kayak di AboutUs.jsx, ditambah logo BEM */}
       <footer className="bg-[#19263d]">
         <Reveal>
-        <div className="mx-auto max-w-7xl px-6 py-12 lg:px-12">
-          <div className="grid items-center gap-10 md:grid-cols-3">
-            <div className="flex justify-center md:justify-start">
-              <div className="flex h-32 w-auto items-center justify-center">
-                <img
-                  src={danImage}
-                  alt="Logo Duta Anti Narkoba UMN"
-                  className="max-h-full max-w-full object-contain"
-                />
+          <div className="mx-auto max-w-7xl px-6 py-12 lg:px-12">
+            <div className="grid items-center gap-10 md:grid-cols-3">
+              <div className="flex justify-center md:justify-start">
+                <div className="flex h-32 w-auto items-center justify-center">
+                  <img
+                    src={danImage}
+                    alt="Logo Duta Anti Narkoba UMN"
+                    className="max-h-full max-w-full object-contain"
+                  />
+                </div>
+              </div>
+
+              <div className="text-center">
+                <h3 className="text-xl font-bold text-white">Contact & Address</h3>
+                <div className="mt-3 text-sm leading-relaxed text-gray-300">
+                  <p>📍 Duta Anti Narkoba UMN</p>
+                  <p>Universitas Multimedia Nusantara</p>
+                  <p>Jl. Scientia Boulevard, Gading Serpong</p>
+                  <p>Tangerang, Banten 15811, Indonesia</p>
+                </div>
+                <div className="mt-5 flex justify-center gap-3">
+                  <a
+                    href="https://www.instagram.com/dutaantinarkoba.umn/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Instagram Duta Anti Narkoba UMN"
+                    className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 text-white shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-pink-500/40"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5">
+                      <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37Z" />
+                      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                    </svg>
+                  </a>
+                  <a
+                    href="mailto:dutaantinarkoba@umn.ac.id"
+                    target="_blank"
+                    aria-label="Email Duta Anti Narkoba UMN"
+                    className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 text-white shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-cyan-400/40"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5">
+                      <rect width="20" height="16" x="2" y="4" rx="2" />
+                      <path d="m22 7-8.97 5.7a2 2 0 0 1-2.06 0L2 7" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex justify-center md:justify-end">
+                <div className="flex h-32 w-auto items-center justify-center gap-4">
+                  <img src={umnImage} alt="Universitas Multimedia Nusantara" className="max-h-full max-w-full object-contain" />
+                  {/* TODO: tambahkan <img src={bemImage} .../> di sini kalau aset logo BEM sudah ada */}
+                </div>
               </div>
             </div>
 
-            <div className="text-center">
-              <h3 className="text-xl font-bold text-white">Contact & Address</h3>
-              <div className="mt-3 text-sm leading-relaxed text-gray-300">
-                <p>📍 Duta Anti Narkoba UMN</p>
-                <p>Universitas Multimedia Nusantara</p>
-                <p>Jl. Scientia Boulevard, Gading Serpong</p>
-                <p>Tangerang, Banten 15811, Indonesia</p>
-              </div>
-              <div className="mt-5 flex justify-center gap-3">
-                <a
-                  href="https://www.instagram.com/dutaantinarkoba.umn/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Instagram Duta Anti Narkoba UMN"
-                  className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 text-white shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-pink-500/40"
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5">
-                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37Z" />
-                    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-                  </svg>
-                </a>
-                <a
-                  href="mailto:dutaantinarkoba@umn.ac.id"
-                  target="_blank"
-                  aria-label="Email Duta Anti Narkoba UMN"
-                  className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 text-white shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-cyan-400/40"
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5">
-                    <rect width="20" height="16" x="2" y="4" rx="2" />
-                    <path d="m22 7-8.97 5.7a2 2 0 0 1-2.06 0L2 7" />
-                  </svg>
-                </a>
-              </div>
-            </div>
-
-            <div className="flex justify-center md:justify-end">
-              <div className="flex h-32 w-auto items-center justify-center gap-4">
-                <img src={umnImage} alt="Universitas Multimedia Nusantara" className="max-h-full max-w-full object-contain" />
-                {/* TODO: tambahkan <img src={bemImage} .../> di sini kalau aset logo BEM sudah ada */}
-              </div>
+            <div className="mt-10 border-t border-white/10 pt-5 text-sm text-gray-500">
+              © 2026 DUTA ANTI NARKOBA UMN – All Rights Reserved
             </div>
           </div>
-
-          <div className="mt-10 border-t border-white/10 pt-5 text-sm text-gray-500">
-            © 2026 DUTA ANTI NARKOBA UMN – All Rights Reserved
-          </div>
-        </div>
         </Reveal>
       </footer>
       {selectedAlbum && <AlbumOverlay album={selectedAlbum} onClose={() => setSelectedAlbum(null)} />}
