@@ -274,6 +274,7 @@ function AlbumOverlay({ album, onClose }) {
 function Event() {
   const location = useLocation();
   const [activeFilter, setActiveFilter] = useState("All");
+  const [activeAwardingTab, setActiveAwardingTab] = useState("voting");
   const [slide, setSlide] = useState(0);
   const [isCarouselPaused, setIsCarouselPaused] = useState(false);
   const [selectedAlbum, setSelectedAlbum] = useState(null);
@@ -407,10 +408,67 @@ function Event() {
         </div>
       </section>
 
+      {/* AWARDING NIGHT CARD */}
+      <section className="mx-auto mt-16 mb-16 max-w-7xl px-6 lg:px-12">
+        <Reveal>
+          <h2 className="text-center text-2xl font-bold text-white md:text-3xl">
+            Awarding Night
+          </h2>
+          <div
+            role="tablist"
+            aria-label="Awarding Night information"
+            className="mt-5 flex flex-wrap justify-center gap-3"
+          >
+            <button
+              type="button"
+              id="awarding-tab-voting"
+              role="tab"
+              aria-selected={activeAwardingTab === "voting"}
+              aria-controls="awarding-tab-panel"
+              onClick={() => setActiveAwardingTab("voting")}
+              className={`rounded-full border px-5 py-2 text-sm font-medium transition-colors ${
+                activeAwardingTab === "voting"
+                  ? "border-blue-500 bg-blue-600 text-white"
+                  : "border-white/20 text-white/80 hover:bg-white/10"
+              }`}
+            >
+              How To Voting
+            </button>
+            <button
+              type="button"
+              id="awarding-tab-ticket"
+              role="tab"
+              aria-selected={activeAwardingTab === "ticket"}
+              aria-controls="awarding-tab-panel"
+              onClick={() => setActiveAwardingTab("ticket")}
+              className={`rounded-full border px-5 py-2 text-sm font-medium transition-colors ${
+                activeAwardingTab === "ticket"
+                  ? "border-blue-500 bg-blue-600 text-white"
+                  : "border-white/20 text-white/80 hover:bg-white/10"
+              }`}
+            >
+              Get Your Ticket
+            </button>
+          </div>
+          <div
+            id="awarding-tab-panel"
+            role="tabpanel"
+            aria-labelledby={`awarding-tab-${activeAwardingTab}`}
+            className="relative mt-5 min-h-[320px] overflow-hidden rounded-2xl border border-white/15 bg-slate-950/60 px-6 py-10 shadow-xl backdrop-blur-xl md:min-h-[420px] md:px-12"
+          >
+            <div className="pointer-events-none absolute -left-20 -top-20 h-72 w-72 rounded-full bg-cyan-400/10 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-24 -right-16 h-80 w-80 rounded-full bg-blue-500/15 blur-3xl" />
+            <p className="relative z-10 text-white">
+              {activeAwardingTab === "voting" ? "a" : "b"}
+            </p>
+          </div>
+        </Reveal>
+      </section>
+
       {/* FILTER */}
       <section id="filter-events" className="mx-auto max-w-7xl scroll-mt-24 px-6 lg:px-12">
         <Reveal>
-        <h2 className="text-center text-2xl font-bold text-white md:text-3xl">Filter Events</h2>
+        <h2 className="text-center text-2xl font-bold text-white md:text-3xl">Filter Album Events</h2>
         <div className="mt-5 flex flex-wrap justify-center gap-3">
           {FILTERS.map((f) => (
             <button
