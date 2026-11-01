@@ -1,6 +1,7 @@
 import { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './Components/Navbar';
+import { Analytics } from '@vercel/analytics/react';
 
 const Home = lazy(() => import('./Pages/Home/Home'));
 const Event = lazy(() => import('./Pages/Event/Event'));
@@ -11,6 +12,7 @@ function App() {
     <BrowserRouter>
       <Navbar />
       <PageTransition />
+      <Analytics />
     </BrowserRouter>
   );
 }
