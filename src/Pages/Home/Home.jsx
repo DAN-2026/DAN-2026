@@ -573,7 +573,7 @@ function Home() {
 
         {/* MEDIA PARTNERS */}
 
-        <div className="rounded-2xl border border-white/10 bg-white/5 px-6 py-8 shadow-xl backdrop-blur-xl md:px-10">
+        <div className="mt-5 rounded-2xl border border-white/10 bg-white/5 px-6 py-8 shadow-xl backdrop-blur-xl md:px-10">
 
           <h2 className="text-2xl font-bold text-white">
             Media{" "}
