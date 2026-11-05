@@ -12,7 +12,7 @@ import umnImage from "../../assets/logoutama/logo-umn.webp";
 // Tanggal Awarding Night 2026 — ganti kalau tanggal pastinya beda
 const TARGET_DATE = new Date("2026-11-25T00:00:00");
 const TICKET_FORM_URL =
-  import.meta.env.VITE_TICKET_FORM_URL || "https://forms.gle/njrocvGwisJkzLVL7";
+  import.meta.env.VITE_TICKET_FORM_URL || "https://docs.google.com/forms/d/e/1FAIpQLSdKCyobCCVkAhnaS-n5y7CeYsiEFueCWBEUbYS9xJqC0V_g2A/viewform";
 
 const CATEGORY_STYLES = {
   ADW: "from-teal-500 to-cyan-300",
