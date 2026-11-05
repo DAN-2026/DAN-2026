@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { useLocation } from "react-router-dom";
 import { ArrowRight, CalendarDays, Images, X } from "lucide-react";
+import HowToVoting from "../../Components/HowToVoting";
 import Reveal from "../../components/Reveal";
 import aboutUsBackground from "../../assets/Background DAN.webp";
 import danImage from "../../assets/logoutama/logo-dan.webp";
@@ -10,7 +11,7 @@ import umnImage from "../../assets/logoutama/logo-umn.webp";
 // import bemImage from "../../assets/logoutama/logo-bem.webp"; // TODO: aktifkan kalau asetnya udah ada
 
 // Tanggal Awarding Night 2026 — ganti kalau tanggal pastinya beda
-const TARGET_DATE = new Date("2026-11-25T00:00:00");
+const TARGET_DATE = new Date("2026-11-30T17:30:00+07:00");
 const TICKET_FORM_URL =
   import.meta.env.VITE_TICKET_FORM_URL || "https://docs.google.com/forms/d/e/1FAIpQLSdKCyobCCVkAhnaS-n5y7CeYsiEFueCWBEUbYS9xJqC0V_g2A/viewform";
 
@@ -411,7 +412,7 @@ function Event() {
       </section>
 
       {/* AWARDING NIGHT CARD */}
-      <section className="mx-auto mt-16 mb-16 max-w-7xl px-6 lg:px-12">
+      <section id="how-to-voting" className="mx-auto mt-16 mb-16 max-w-7xl scroll-mt-24 px-6 lg:px-12">
         <Reveal>
           <h2 className="text-center text-2xl font-bold text-white md:text-3xl">
             Awarding Night
@@ -456,9 +457,9 @@ function Event() {
             aria-labelledby={`awarding-tab-${activeAwardingTab}`}
             className="relative mt-5 overflow-hidden rounded-2xl border border-white/10 bg-slate-950/70 px-5 py-8 md:px-10 md:py-10"
           >
-            {activeAwardingTab === "voting" ? (
-              <p className="relative z-10 text-white">Informasi voting akan segera hadir.</p>
-            ) : (
+              {activeAwardingTab === "voting" ? (
+                <HowToVoting />
+              ) : (
               <div className="mx-auto max-w-4xl text-white">
                 <div className="text-center">
                   <h3 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">
