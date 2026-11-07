@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { useLocation } from "react-router-dom";
 import { ArrowRight, CalendarDays, Images, X } from "lucide-react";
@@ -279,6 +279,7 @@ function Event() {
   const [activeFilter, setActiveFilter] = useState("All");
   const [activeAwardingTab, setActiveAwardingTab] = useState("voting");
   const [slide, setSlide] = useState(0);
+  const touchStartRef = useRef(null);
   const [isCarouselPaused, setIsCarouselPaused] = useState(false);
   const [selectedAlbum, setSelectedAlbum] = useState(null);
   const [adwGalleryPhotos, setAdwGalleryPhotos] = useState([]);
@@ -537,9 +538,32 @@ function Event() {
       <section className="mx-auto mt-10 max-w-7xl px-6 lg:px-12">
         <Reveal>
           <div
-            className="relative overflow-hidden rounded-3xl"
+            className="relative touch-pan-y overflow-hidden rounded-3xl"
             onMouseEnter={() => setIsCarouselPaused(true)}
             onMouseLeave={() => setIsCarouselPaused(false)}
+            onTouchStart={(event) => {
+              const touch = event.touches[0];
+              touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+              setIsCarouselPaused(true);
+            }}
+            onTouchEnd={(event) => {
+              const start = touchStartRef.current;
+              touchStartRef.current = null;
+              setIsCarouselPaused(false);
+              if (!start || filteredEvents.length < 2) return;
+
+              const touch = event.changedTouches[0];
+              const deltaX = touch.clientX - start.x;
+              const deltaY = touch.clientY - start.y;
+              if (Math.abs(deltaX) < 50 || Math.abs(deltaX) < Math.abs(deltaY)) return;
+
+              if (deltaX < 0) goNext();
+              else goPrev();
+            }}
+            onTouchCancel={() => {
+              touchStartRef.current = null;
+              setIsCarouselPaused(false);
+            }}
             onFocusCapture={() => setIsCarouselPaused(true)}
             onBlurCapture={(event) => {
               if (!event.currentTarget.contains(event.relatedTarget)) {
