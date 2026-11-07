@@ -449,7 +449,7 @@ function Event() {
             id="awarding-tab-panel"
             role="tabpanel"
             aria-labelledby={`awarding-tab-${activeAwardingTab}`}
-            className="relative mt-5 overflow-hidden rounded-2xl border border-white/10 bg-slate-950/70 px-5 py-8 md:px-10 md:py-10"
+            className="relative mt-5 px-0 py-8"
           >
               {activeAwardingTab === "voting" ? (
                 <HowToVoting />

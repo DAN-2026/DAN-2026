@@ -30,7 +30,7 @@ function HowToVoting() {
             <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-cyan-400/20 text-sm font-bold text-cyan-300">
               {index + 1}
             </span>
-            <p className="text-sm leading-6 text-blue-100/75 md:text-base">{text}</p>
+            <p className="text-sm font-medium leading-6 text-blue-50/90 md:text-base">{text}</p>
           </li>
         ))}
       </ol>
