@@ -46,14 +46,15 @@ const events = [
   {
     id: 2,
     category: "DGTS",
-    title: "Duta Anti Narkoba",
-    titleHighlight: "Goes To School (DGTS)",
+    title: "Goes To School",
+    titleHighlight: "(DGTS)",
     description:
       "Program edukatif berfokus pada penyuluhan di sekolah. Interaktif dan engaging, mengajak pelajar memahami bahaya narkoba melalui campaign kreatif.",
     date: "14 Nov 2026",
     location: "SMA Negeri 1 Tangerang",
     participants: "150+ Peserta",
     photoCount: 0,
+    comingSoon: true,
   },
   {
     id: 3,
@@ -66,6 +67,7 @@ const events = [
     location: "Universitas Multimedia Nusantara",
     participants: "300+ Peserta",
     photoCount: 0,
+    comingSoon: true,
   },
 ];
 
@@ -684,6 +686,11 @@ function Event() {
                     <span className="absolute right-3 top-3 rounded-full bg-black/40 px-3 py-1 text-xs font-medium text-white">
                       {e.category}
                     </span>
+                    {e.comingSoon && (
+                      <span className="absolute inset-0 flex items-center justify-center bg-black/20 text-sm font-bold uppercase tracking-widest text-white">
+                        Coming Soon
+                      </span>
+                    )}
                   </div>
                   <div className="flex items-center justify-between px-4 py-4">
                     <div>
