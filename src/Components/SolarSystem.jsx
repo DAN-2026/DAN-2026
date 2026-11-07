@@ -309,20 +309,21 @@ function DivisionCard({ division, onClose }) {
   useEffect(() => {
     let isMounted = true
 
-    if (!division.photoLoader) {
-      setPhotoUrl(null)
-      return () => {
-        isMounted = false
+    const loadPhoto = async () => {
+      if (!division.photoLoader) {
+        if (isMounted) setPhotoUrl(null)
+        return
+      }
+
+      try {
+        const module = await division.photoLoader()
+        if (isMounted) setPhotoUrl(module.default || module)
+      } catch {
+        if (isMounted) setPhotoUrl(null)
       }
     }
 
-    division.photoLoader().then((module) => {
-      if (!isMounted) return
-      setPhotoUrl(module.default || module)
-    }).catch(() => {
-      if (!isMounted) return
-      setPhotoUrl(null)
-    })
+    loadPhoto()
 
     return () => {
       isMounted = false

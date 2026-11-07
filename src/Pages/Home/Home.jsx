@@ -573,7 +573,7 @@ function Home() {
 
         {/* MEDIA PARTNERS */}
 
-        <div className="rounded-2xl border border-white/10 bg-white/5 px-6 py-8 shadow-xl backdrop-blur-xl md:px-10">
+        <div className="mt-5 rounded-2xl border border-white/10 bg-white/5 px-6 py-8 shadow-xl backdrop-blur-xl md:px-10">
 
           <h2 className="text-2xl font-bold text-white">
             Media{" "}
@@ -761,36 +761,6 @@ function Home() {
       </footer>
 
     </main>
-  );
-}
-
-
-
-/* =========================================================
-   FEATURE COMPONENT
-========================================================= */
-
-function Feature({ icon, title, text }) {
-  return (
-    <div className="flex items-center gap-3">
-
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-700 text-lg">
-        {icon}
-      </div>
-
-      <div>
-
-        <p className="text-xs font-semibold text-white">
-          {title}
-        </p>
-
-        <p className="text-xs leading-relaxed text-gray-400">
-          {text}
-        </p>
-
-      </div>
-
-    </div>
   );
 }
 
