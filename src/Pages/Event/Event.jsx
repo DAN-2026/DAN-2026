@@ -372,6 +372,55 @@ function Event() {
     setSlide((currentSlide) => (currentSlide === filteredEvents.length - 1 ? 0 : currentSlide + 1));
   const current = filteredEvents[slide] ?? events[0];
 
+  {/* LEADERBOARD */}
+  {/* vvvvvvvvvvv */}
+
+  const participantsData = [
+    { name: "what", avatar: "/path/foto1.jpg", votes: 100 },
+    { name: "apa?", avatar: "/path/foto2.jpg", votes: 80 },
+    { name: "lah kok nanya", avatar: "/path/foto3.jpg", votes: 60 },
+    { name: "lah gatau ", avatar: "/path/foto4.jpg", votes: 50 },
+    { name: "gimana sih", avatar: "/path/foto5.jpg", votes: 40 },
+    { name: "ligma", avatar: "/path/foto6.jpg", votes: 30 },
+    { name: "balls", avatar: "/path/foto7.jpg", votes: 25 },
+    { name: "kamu gila", avatar: "/path/foto8.jpg", votes: 20 },
+    { name: "kamu yang gila", avatar: "/path/foto9.jpg", votes: 15 },
+    { name: "crezy?", avatar: "/path/foto10.jpg", votes: 10 },
+  ];
+
+  const [showAll, setShowAll] = useState(false);
+  const sortedParticipants = [...participantsData].sort((a,b) => b.votes - a.votes);
+  const maxVotes = 500;
+  const displayedParticipants = showAll ? sortedParticipants : sortedParticipants.slice(0,3);
+
+  function LeaderboardCard({ name, avatar, votes, maxVotes, rank }) 
+  {
+    const percentage = Math.round((votes / maxVotes) * 100);
+
+    return (
+      <div className="mb-1 h-30 relative overflow-hidden rounded-2xl bg-slate-100/5 backdrop-blur-lg border border-white/10 flex items-center gap-4 md:gap-6 font-bold ">
+        <div className="mb-0 h-30 overflow-hidden rounded-1xl bg-white-200/20 backdrop-blur-lg border border-white/10 p-5 md:p-8 lg:p-12 flex items-center gap-4 md:gap-6 font-bold " style={{ width: `${percentage}%` }}></div>
+        <div className="mb-0 h-30 absolute overflow-hidden rounded-2xl flex items-center gap-4 md:gap-6 font-bold ">
+          <span className="pl-5">#{rank}</span>
+          <img src={avatar} alt={name} className="w-20 h-14 md:w-50 md:h-30 rounded-2xl object-cover border-2 border-indigo-500 shrink-0" />
+          <div className="flex-1">
+            <h3 className="w-20 md:w-30 text-white font-bold text-lg md:text-xl mb-2">{name}</h3>
+            <div className="w-full bg-slate-800/0 rounded-full h-2 overflow-hidden">
+              <div className="bg-indigo-500/0 h-full rounded-full" style={{ width: `${percentage}%` }}></div>
+            </div>
+            <div className="flex justify-between text-xs text-slate-400 mt-1">
+              <span>{votes} Votes</span>
+              <span>{percentage}%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  {/* ^^^^^^^^^^^ */}
+  {/* LEADERBOARD */}
+
   return (
     <main className="min-h-screen overflow-hidden pt-32">
       {/* HERO */}
@@ -409,6 +458,36 @@ function Event() {
             <p className="mt-2 text-base text-slate-500 md:text-lg">Smart, Healthy, and Fun</p>
           </div>
         </div>
+      </section>
+
+      {/* LEADERBOARD */}
+      {/* LEADERBOARD */}
+      <section>
+        <h2 className="text-center text-2xl font-bold text-white md:text-3xl mb-8">
+          LEADERBOARD
+        </h2>
+        <Reveal>
+          <div className="mx-auto w-5/6 sm:w-4/5 md:w-3/4 lg:w-2/3 space-y-4 px-6">
+            {displayedParticipants.map((peserta, index) => (
+              <LeaderboardCard
+              key     = {index}
+              name    = {peserta.name}
+              avatar  = {peserta.avatar}
+              votes   = {peserta.votes}
+              maxVotes= {maxVotes}
+              rank    = {sortedParticipants.findIndex(p => p.name === peserta.name) + 1}
+              />
+            ))}
+            {sortedParticipants.length > 3 && (
+              <div className = "text-center pt-4">
+                <button onClick={() => setShowAll(!showAll)}
+                  className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold transition-all text-sm md:text-base cursor-pointer">
+                  {showAll ? "Show Less" : "See More"}
+                </button>
+              </div>
+            )}
+          </div>
+        </Reveal>
       </section>
 
       {/* AWARDING NIGHT CARD */}
