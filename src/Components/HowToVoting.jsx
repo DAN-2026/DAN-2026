@@ -16,7 +16,7 @@ function HowToVoting() {
   return (
     <div className="mx-auto max-w-4xl text-white">
       <div className="text-center">
-        <h3 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">
+        <h3 id="cara-voting" className="scroll-mt-24 mt-2 text-3xl font-bold tracking-tight md:text-4xl">
           Cara <span className="text-cyan-300">Voting</span>
         </h3>
         <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-blue-100/75 md:text-base">
