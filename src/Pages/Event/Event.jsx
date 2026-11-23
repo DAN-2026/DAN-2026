@@ -296,10 +296,14 @@ function Event() {
     resolvedFilter === "All" ? events : events.filter((event) => event.category === resolvedFilter);
 
   useEffect(() => {
-    if (location.hash !== "#filter-events") return;
+    const targetId = {
+      "#filter-events": "filter-events",
+      "#cara-voting": "cara-voting",
+    }[location.hash];
+    if (!targetId) return;
 
     const scrollTimeout = window.setTimeout(() => {
-      document.getElementById("filter-events")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 0);
 
     return () => window.clearTimeout(scrollTimeout);
